@@ -111,7 +111,7 @@ const KYCForm = ({ onKycUpdate }) => {
     <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "8px", background: "#000", color: "#fff" }}>
       <h2 style={{ textAlign: "center" }}>IoT-Enabled KYC Form</h2>
       
-      <h3>Personal Information</h3>
+      <h3 style={{ color: 'white' }}>Personal Information</h3>
       {['residentialAddress', 'dateOfBirth', 'nationality', 'maritalStatus', 'occupation', 'placeOfWork', 'workAddress'].map((key) => (
         <div key={key} style={{ marginBottom: "15px" }}>
           <label>{key.replace(/([A-Z])/g, " $1").trim()}</label>
@@ -119,7 +119,7 @@ const KYCForm = ({ onKycUpdate }) => {
         </div>
       ))}
 
-      <h3>Next of Kin</h3>
+      <h3 style={{ color: 'white' }}>Next of Kin</h3>
       {Object.keys(kycData.nextOfKin).map((subKey) => (
         <div key={`nextOfKin.${subKey}`} style={{ marginBottom: "15px" }}>
           <label>{subKey.replace(/([A-Z])/g, " $1").trim()}</label>
@@ -127,7 +127,7 @@ const KYCForm = ({ onKycUpdate }) => {
         </div>
       ))}
 
-      <h3>Bank Details</h3>
+<h3 style={{ color: 'white' }}>Bank Details</h3>
       {Object.keys(kycData.bankDetails).map((subKey) => (
         <div key={`bankDetails.${subKey}`} style={{ marginBottom: "15px" }}>
           <label>{subKey.replace(/([A-Z])/g, " $1").trim()}</label>
@@ -135,7 +135,7 @@ const KYCForm = ({ onKycUpdate }) => {
         </div>
       ))}
 
-      <h3>Corporate Information</h3>
+<h3 style={{ color: 'white' }}>Corporate Information</h3>
       {Object.keys(kycData.corporateInfo).map((subKey) => (
         <div key={`corporateInfo.${subKey}`} style={{ marginBottom: "15px" }}>
           <label>{subKey.replace(/([A-Z])/g, " $1").trim()}</label>

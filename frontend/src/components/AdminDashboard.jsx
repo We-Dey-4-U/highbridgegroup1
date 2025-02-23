@@ -21,7 +21,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridgeapi-1.onrender.com/api/admin/users", {
+      const response = await axios.get("http://localhost:5000/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(Array.isArray(response.data) ? response.data.filter(user => user?.name) : []);
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
   const fetchKYCRequests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridgeapi-1.onrender.com/api/admin/kyc-requests", {
+      const response = await axios.get("http://localhost:5000/api/admin/kyc-requests", {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
   const fetchInvestments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridgeapi-1.onrender.com/api/admin/investments", {
+      const response = await axios.get("http://localhost:5000/api/admin/investments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInvestments(response.data || []);
@@ -61,15 +61,23 @@ const AdminDashboard = () => {
     }
   };
 
+  
+  
   const handleApproveKYC = async (userId, status) => {
     try {
-      await axios.post(`https://highbridgeapi-1.onrender.com/api/admin/kyc-status/${userId}`, { status });
-      fetchKYCRequests();
-    } catch (error) {
-      console.error("Error updating KYC status:", error);
-    }
-  };
+        const token = localStorage.getItem("token");
+        await axios.patch(`http://localhost:5000/api/admin/kyc/${userId}`, 
+            { status }, 
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
 
+        alert(`KYC ${status} successfully!`);
+        fetchKYCRequests(); // Refresh KYC list after updating
+    } catch (error) {
+        console.error("Error updating KYC status:", error);
+        alert("Failed to update KYC status. Please try again.");
+    }
+};
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -89,7 +97,7 @@ const AdminDashboard = () => {
         <button className="logout-button" onClick={handleLogout}>Logout</button>
 
         <section>
-          <h2>Users</h2>
+        <h2 style={{ color: 'black' }}>Users</h2>
           {loading ? (
             <p>Loading...</p>
           ) : (
@@ -123,9 +131,9 @@ const AdminDashboard = () => {
     <div className="kyc-modal-content" id="kyc-print-content">
       
       {/* Hero Image */}
-      <img src="/assets/images/hero/agrovestimage.jpg" alt="KYC Banner" className="kyc-hero" />
+      <img src="/assets/images/hero/subscrptionimage.jpg" alt="KYC Banner" className="kyc-hero" />
 
-      <h2>KYC Details</h2>
+      <h2>KYC Details Subscription Form</h2>
       
       <div className="kyc-data">
         <p><strong>Address:</strong> {selectedKYC.kycData?.residentialAddress || "N/A"}</p>
@@ -184,7 +192,7 @@ const AdminDashboard = () => {
   </div>
 )}
         <section>
-          <h2>Investments</h2>
+          <h2 style={{ color: 'black' }}>Investments</h2>
           <table>
             <thead>
               <tr>

@@ -44,10 +44,14 @@ const [isKycModalOpen, setKycModalOpen] = useState(false);
         console.log("🟢 Fetching dashboard data...");
         //http://localhost:5000/api/dashboard
 
-        const response = await axios.get("https://highbridgeapi-1.onrender.com/api/dashboard", {
+        const response = await axios.get("http://localhost:5000/api/dashboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("✅ API Response:", response.data);
+        // Ensure the KYC verification field is updated
+      if (response.data.kycApproved) {
+        response.data.kycVerified = true;
+      }
         console.log("📌 Referral Code from API:", response.data.referralCode);
 
         setUser(response.data);
@@ -162,7 +166,7 @@ const formattedData = response.data.investments
             ? (investmentAmount * parseFloat(planDetails.label.match(/\d+/)[0]) / 100) 
             : 0;
 
-       const webhookUrl = "https://highbridgeapi.onrender.com/api/payments/webhook"; // ✅ Corrected URL
+       const webhookUrl = "http://localhost:5000/api/payments/webhook"; // ✅ Corrected URL
 
         const paymentData = {
             amount: investmentAmount,
@@ -178,7 +182,7 @@ const formattedData = response.data.investments
         console.log("🚀 Sending Payment Data:", paymentData);
 
         const paymentResponse = await axios.post(
-            "https://highbridgeapi.onrender.com/api/payments/initiate-flutterwave-payment",
+            "http://localhost:5000/api/payments/initiate-flutterwave-payment",
             paymentData,
             { headers: { Authorization: `Bearer ${token}` } }
         );
