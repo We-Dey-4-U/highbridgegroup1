@@ -21,7 +21,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/admin/users", {
+      const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(Array.isArray(response.data) ? response.data.filter(user => user?.name) : []);
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
   const fetchKYCRequests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/admin/kyc-requests", {
+      const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/kyc-requests", {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
   const fetchInvestments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/admin/investments", {
+      const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/investments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInvestments(response.data || []);
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
   const handleApproveKYC = async (userId, status) => {
     try {
         const token = localStorage.getItem("token");
-        await axios.patch(`http://localhost:5000/api/admin/kyc/${userId}`, 
+        await axios.patch(`https://highbridge-api-9.onrender.com/api/admin/kyc/${userId}`, 
             { status }, 
             { headers: { Authorization: `Bearer ${token}` } }
         );
