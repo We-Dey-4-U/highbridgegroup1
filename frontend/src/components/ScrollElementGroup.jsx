@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import useScrollAnimation from "../hooks/useScrollAnimation";
 import "../styles/animations.css"; // Import styles for animations
 
-const ScrollElementGroup = ({ children }) => {
+const ScrollElement = ({ children }) => {
   const elementRef = useRef(null);
   const isVisible = useScrollAnimation(elementRef);
 
@@ -16,4 +16,4 @@ const ScrollElementGroup = ({ children }) => {
   );
 };
 
-export default ScrollElementGroup;
+export default ScrollElement;

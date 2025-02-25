@@ -24,7 +24,17 @@ const AdminDashboard = () => {
       const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUsers(Array.isArray(response.data) ? response.data.filter(user => user?.name) : []);
+      // Ensure response data is an array and includes referral fields
+      setUsers(Array.isArray(response.data) 
+      ? response.data.map(user => ({
+          id: user._id || "N/A",  // Ensure `_id` exists
+          name: user.name || "N/A",
+          email: user.email || "N/A",
+          referralCode: user.referralCode || "N/A",
+          referer: user.referer || "N/A",
+        }))
+      : []
+  );
     } catch (error) {
       console.error("Error fetching users:", error);
       setUsers([]);
@@ -102,25 +112,29 @@ const AdminDashboard = () => {
             <p>Loading...</p>
           ) : (
             <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
+             <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Referral Code</th>
+    <th>Referred By</th>
+    <th>Actions</th>
+  </tr>
+</thead>
               <tbody>
-                {users.map(user => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name || "N/A"}</td>
-                    <td>{user.email || "N/A"}</td>
-                    <td>
-                      <button onClick={() => setSelectedKYC(user)}>View KYC</button>
-                    </td>
-                  </tr>
-                ))}
+              {users.map(user => (
+    <tr key={user.id}>
+      <td>{user.id}</td>
+      <td>{user.name}</td>
+      <td>{user.email}</td>
+      <td>{user.referralCode}</td>
+      <td>{user.referer}</td>
+      <td>
+        <button onClick={() => setSelectedKYC(user)}>View KYC</button>
+      </td>
+    </tr>
+  ))}
               </tbody>
             </table>
           )}

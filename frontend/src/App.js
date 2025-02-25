@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop"; // Import ScrollToTop component
 import Home from "./pages/Home";
+import HighbridgeGroupHome from "./pages/HighbridgeGroupHome";
 import About from "./pages/About"; 
 import ServicesPage from "./pages/Services";
 import Contact from "./pages/Contact";
@@ -47,7 +48,8 @@ const App = () => {
     <Router>
       <ScrollToTop /> {/* Add the ScrollToTop component here */}
       <Routes>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<HighbridgeGroupHome />} />
+      <Route path="/HighbridgeHomes" element={<Home />} />
         <Route path="/flipvest" element={<AgrovestLandingPage />} /> {/* New route for AgrovestLandingPage */}
         <Route path="/webiner" element={<AgrovestWebinarPage />} /> {/* New route for AgrovestLandingPage */}
         <Route path="/about" element={<About />} />
