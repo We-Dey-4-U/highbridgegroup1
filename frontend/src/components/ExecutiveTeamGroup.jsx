@@ -9,10 +9,11 @@ import edImage from "../assets/ed.jpg"; // Correct path for ED
 
 // Executive members array with names and roles
 const executiveMembers = [
-    { name: "Engr. Olawale Popoola", role: "Managing Director", image: mdImage }, // Correct path for MD 
-    { name: "Mrs.Busayo Popoola", role: "Executive Director", image: edImage }, // Correct path for ED 
-    { name: "Suleiman David", role: "General Manager", image: gmImage }, // Correct path for GM 
-    { name: "Mrs. Lilian Ezenwanagu", role: "Human Resources", image: hrImage }, // Correct path for HR
+    { name: "Engr. Olawale Popoola", role: "Managing Director", company: "Your Company Name", image: mdImage }, // Correct path for MD 
+    { name: "Mrs.Busayo Popoola", role: "Executive Director", company: "Your Company Name", image: edImage }, // Correct path for ED 
+    { name: "Suleiman David", role: "General Manager", company: "Your Company Name", image: gmImage }, // Correct path for GM 
+    { name: "Mrs. Lilian Ezenwanagu", role: "Human Resources", company: "Your Company Name", image: hrImage }, // Correct path for HR
+    
 ];
 
 const ExecutiveTeamGroup = () => {
@@ -29,6 +30,7 @@ const ExecutiveTeamGroup = () => {
             />
             <h3 className="team-name">{member.name}</h3>
             <p className="team-role">{member.role}</p>
+            <p className="team-company">{member.company}</p> {/* Added company name */}
           </div>
         ))}
       </div>

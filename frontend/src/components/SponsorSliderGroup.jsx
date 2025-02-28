@@ -6,7 +6,7 @@ const SponsorSliderGroup = () => {
     "/assets/images/brandlogo/homes.png",
     "/assets/images/brandlogo/energy2.png",
     "/assets/images/brandlogo/flipvestlogo2.png",
-    "/assets/images/brandlogo/luxuryde.jpg", // Add more sponsors as needed
+    "/assets/images/brandlogo/webluxury.png", // Add more sponsors as needed
    
   ];
 
