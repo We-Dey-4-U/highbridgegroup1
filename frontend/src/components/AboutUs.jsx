@@ -10,10 +10,14 @@ const AboutUs = () => {
           <div className="text-content">
             <h1>About Us</h1>
             <p>
-              Welcome to Highbridge Homes, a company committed to creating exceptional homes
-              that reflect the true essence of luxury and comfort. With years of experience in the
-              real estate industry, we take pride in our craftsmanship, attention to detail, and
-              dedication to customer satisfaction.
+           Welcome to  Highbridge Group  a leading Nigerian conglomerate dedicated to connecting local and
+             global clients with high-value opportunities across real estate, energy, agriculture,
+              and investments. Committed to innovation, sustainability, and excellence, we empower 
+              individuals and businesses with technology-driven solutions that foster economic growth 
+              and long-term value creation. Guided by integrity, expertise, and a client-first approach,
+               we set industry benchmarks while driving development and wealth creation for Nigerians and 
+               global investors. Through our subsidiaries, we leverage synergy, strategic partnerships,
+                and cutting-edge technology to shape a better future.
             </p>
 
             <div className="iframe-container">
@@ -29,32 +33,29 @@ const AboutUs = () => {
             </div>
 
             <div className="our-values">
-              <h2>Our Vision At Highbridge Homes Limited</h2>
+              <h2>Our Vision At Highbridge groups Limited</h2>
               <p>
-                To build high-quality, sustainable homes that enhance the living experience and
-                meet the evolving needs of our customers. We provide the most professional, informative, 
-                loyal, and dedicated service in the Real Estate sector. The best interests and concerns of our 
-                clients will always come first on our daily priorities and routine. Our vision is to be the 
-                most client-centric organization, to build best-in-class platforms where clients can come to find 
-                and discover every need in Real Estate.
+              To be the foremost Nigerian conglomerate, connecting local and global clients with 
+              innovative, sustainable, and high-value opportunities in real estate, energy, agriculture, 
+              and investments.
               </p>
               <h2>Our Mission</h2>
               <p>
-                To be the leading real estate developer, known for innovation, trust, and a
-                commitment to the community. Our team approach philosophy ensures your needs are
-                important to each and every member of our organization, thereby creating unparalleled
-                opportunities for all our clients looking to own or sell Real Estate. We are most 
-                dedicated to the development of long-term client relationships, and we are committed to delivering
-                the dream of affordable luxury homes.
+              We empower individuals and businesses by delivering exceptional, technology-driven solutions 
+              across our industries. With integrity, expertise, and a client-first approach, we create wealth, 
+              drive economic growth, and build lasting value for Nigerians at home, abroad, and global 
+              investors.  
               </p>
 
               {/* Our Objectives Section */}
               <h2>Our Objectives</h2>
               <p>
-                At Highbridge Homes, we are committed to achieving several key objectives that will guide us in
-                providing quality service and innovative solutions for our clients. These objectives help us maintain
-                our vision of being a trusted leader in real estate development, while ensuring that we meet the needs
-                of every individual client.
+              At Highbridge Group, we are committed to achieving key objectives that drive excellence
+               across our diverse business sectors. From luxury real estate and sustainable energy 
+               solutions to agricultural investments and strategic business ventures, our mission is
+                to provide innovative solutions and exceptional service. These objectives reinforce our
+                 vision of being a trusted leader in multiple industries while ensuring we meet the unique 
+                 needs of every client
               </p>
               <ul className="objectives-list">
                 <li><AiOutlineStar className="objective-icon" /> To provide exceptional customer service with a focus on personalized attention.</li>

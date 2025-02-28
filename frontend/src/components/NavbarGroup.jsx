@@ -17,7 +17,7 @@ const NavbarGroup = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <img src="/assets/images/logo/highbridge2.png" alt="Highbridge Homes Logo" />
+          <img src="/assets/images/logo/group.png" alt="Highbridge Homes Logo" />
         </div>
 
         {/* Hamburger Icon for Mobile */}
@@ -51,13 +51,18 @@ const NavbarGroup = () => {
                 {/* External link - opens in a new tab */}
                 <li>
                   <a href="http://www.highbridgeenergyltd.com" target="_blank" rel="noopener noreferrer">
-                    Highbridge Energy
+                    Highbridge Energy & Tech Limited
                   </a>
                 </li>
                 {/* Internal links remain unchanged */}
-                <li><a href="/HighbridgeHomes">Highbridge Homes</a></li>
-                <li><a href="/highbridge-tech">Highbridge Energy & Tech</a></li>
+                <li><a href="/HighbridgeHomes">Highbridge Homes Limited</a></li>
+                <li><a href="/highbridge-tech">Highbridge Agrotech and Agro alien Limited</a></li>
                 <li><a href="/flipvest">Highbridge Flipvest</a></li>
+                <li>
+                  <a href="https://highbridgeluxury.com/" target="_blank" rel="noopener noreferrer">
+                    Highbridge Luxury
+                  </a>
+                </li>
               </ul>
             )}
           </li>

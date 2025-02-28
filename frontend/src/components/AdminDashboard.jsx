@@ -21,20 +21,11 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/users", {
+      const response = await axios.get("http://localhost:5000/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // Ensure response data is an array and includes referral fields
-      setUsers(Array.isArray(response.data) 
-      ? response.data.map(user => ({
-          id: user._id || "N/A",  // Ensure `_id` exists
-          name: user.name || "N/A",
-          email: user.email || "N/A",
-          referralCode: user.referralCode || "N/A",
-          referer: user.referer || "N/A",
-        }))
-      : []
-  );
+
+      setUsers(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching users:", error);
       setUsers([]);
@@ -46,12 +37,12 @@ const AdminDashboard = () => {
   const fetchKYCRequests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/kyc-requests", {
+      const response = await axios.get("http://localhost:5000/api/admin/kyc-requests", {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       console.log("[KYC DATA]", response.data); // Debugging log
-      setKycRequests(Array.isArray(response.data) ? response.data.filter(user => user?.kycData?.residentialAddress) : []);
+      setKycRequests(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching KYC requests:", error);
       setKycRequests([]);
@@ -61,7 +52,7 @@ const AdminDashboard = () => {
   const fetchInvestments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridge-api-9.onrender.com/api/admin/investments", {
+      const response = await axios.get("http://localhost:5000/api/admin/investments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInvestments(response.data || []);
@@ -71,32 +62,30 @@ const AdminDashboard = () => {
     }
   };
 
-  
-  
   const handleApproveKYC = async (userId, status) => {
     try {
-        const token = localStorage.getItem("token");
-        await axios.patch(`https://highbridge-api-9.onrender.com/api/admin/kyc/${userId}`, 
-            { status }, 
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
+      const token = localStorage.getItem("token");
+      await axios.patch(`http://localhost:5000/api/admin/kyc/${userId}`, 
+        { status }, 
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-        alert(`KYC ${status} successfully!`);
-        fetchKYCRequests(); // Refresh KYC list after updating
+      alert(`KYC ${status} successfully!`);
+      fetchKYCRequests();
     } catch (error) {
-        console.error("Error updating KYC status:", error);
-        alert("Failed to update KYC status. Please try again.");
+      console.error("Error updating KYC status:", error);
+      alert("Failed to update KYC status. Please try again.");
     }
-};
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
   };
 
-
   const printKYC = () => {
-    window.print(); // Opens print preview
+    window.print();
   };
 
   return (
@@ -131,7 +120,12 @@ const AdminDashboard = () => {
       <td>{user.referralCode}</td>
       <td>{user.referer}</td>
       <td>
-        <button onClick={() => setSelectedKYC(user)}>View KYC</button>
+      <button onClick={() => {
+  console.log("[SELECTED KYC USER]", user);
+  setSelectedKYC(user);
+}}>
+  View KYC
+</button>
       </td>
     </tr>
   ))}
@@ -147,7 +141,22 @@ const AdminDashboard = () => {
       {/* Hero Image */}
       <img src="/assets/images/hero/subscrptionimage.jpg" alt="KYC Banner" className="kyc-hero" />
 
+    
+      
       <h2>KYC Details Subscription Form</h2>
+
+      {/* Passport Image Box */}
+
+      {selectedKYC?.kycData?.passportImage && (
+                <div className="passport-box" style={{ textAlign: "center", marginBottom: "10px" }}>
+                  <img
+                    src={`http://localhost:5000/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
+                    alt="Passport"
+                    style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "5px", border: "1px solid #ccc" }}
+                    onError={(e) => console.error("Passport image failed to load:", e.target.src)}
+                  />
+                </div>
+              )}
       
       <div className="kyc-data">
         <p><strong>Address:</strong> {selectedKYC.kycData?.residentialAddress || "N/A"}</p>

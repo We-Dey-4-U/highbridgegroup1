@@ -1,10 +1,12 @@
 .featured {
     margin-top: 5rem;
+    background-color: #011d16;
 }
 
 .featured .featured-text {
     text-align: center;
     margin: 1rem 0;
+    color: #fff;
 }
 
 .featured .container {
@@ -112,7 +114,7 @@
     margin: 40px auto;
     padding: 20px;
     max-width: 1200px;
-    background-color: #f9f9f9;
+    background-color: #011d16;
     border-radius: 10px;
 }
 

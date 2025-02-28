@@ -8,9 +8,15 @@ const AboutGroup = () => {
       <div className="about-content">
         <div className="about-text">
           <p>
-          Highbridge Group is a leading Nigerian conglomerate dedicated to connecting local and global clients with high-value opportunities across real estate, energy, agriculture, and investments. With a commitment to innovation, sustainability, and excellence, we empower individuals and businesses by delivering technology-driven solutions that foster economic growth and long-term value creation.
+          Highbridge Group is a leading Nigerian conglomerate dedicated to connecting local and global clients 
+          with high-value opportunities across real estate, energy, agriculture, and investments. Committed to 
+          innovation, sustainability, and excellence, we empower individuals and businesses with 
+          technology-driven solutions that foster economic growth and long-term value creation. Guided by 
+          integrity, expertise, and a client-first approach, we set industry benchmarks while driving 
+          development and wealth creation for Nigerians and global investors. Through our subsidiaries,
+           we leverage synergy, strategic partnerships, and cutting-edge technology to shape a better future.
 
-         Guided by integrity, expertise, and a client-first approach, we set industry benchmarks while driving development and wealth creation for Nigerians and global investors. Through our subsidiaries—Highbridge Homes, Highbridge Energy & Tech, Highbridge Flipvest, and Highbridge Agrotech—we leverage synergy, strategic partnerships, and cutting-edge technology to shape a better future
+
           </p>
           <a href="/about" className="read-more-button">
             Read More

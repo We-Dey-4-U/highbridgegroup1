@@ -85,18 +85,81 @@
   background-color: #005f00; /* Darker green on hover */
 }
 
-/* Responsive Design */
+
+
+.hero-title {
+  color: #2ecc71; /* Green color */
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 10px rgba(46, 204, 113, 0.5); /* Soft glow */
+}
+
+.hero-subtext {
+  color: #000; /* Pure black */
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+/* Gradient Highlight */
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 10px rgba(46, 204, 113, 0.5); /* Soft glow */
+}
+
+/* Green text for "Discover Your" */
+.green-text {
+  color: #2ecc71; /* Green */
+}
+
+/* Subtext Styling */
+.hero-subtext {
+  color: #b6720b; /* Pure black */
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+/* Gradient Highlights */
+.highlight {
+  background: linear-gradient(90deg, #ff8c00, #ff4081);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.highlight-alt {
+  background: linear-gradient(90deg, #4400ff, #021c3b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+/* Responsive Styles for Small Screens */
 @media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 2rem;
+  .hero-title {
+    font-size: 2rem; /* Adjust for smaller screens */
+    text-align: center;
   }
 
-  .hero-content p {
+  .hero-subtext {
     font-size: 1rem;
+    text-align: center;
+    padding: 0 10px;
   }
 
-  .btn-primary {
-    padding: 0.5rem 1rem;
-    margin-right: 150px;
+  .hero-content {
+    padding: 20px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.9rem;
+    padding: 0 15px;
   }
 }

@@ -3,26 +3,25 @@ import { FaFacebook, FaYoutube, FaTwitter, FaInstagram, FaTelegram } from "react
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa"; // Importing additional icons
 import "./Footer.css";
 
-const FooterGroup = () => {
+const FlipvestFooter = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
         {/* Logo and Description */}
         <div className="footer-about">
           <img
-            src="/assets/images/logo/group.png"
+            src="/assets/images/logo/flipvestLOGO.png"
             alt="Highbridge Homes"
             className="footer-logo"
           />
           <p>
-          Highbridge Group is a leading Nigerian conglomerate dedicated to connecting local 
-          and global clients with high-value opportunities across real estate, energy, agriculture, 
-          and investments. Committed to innovation, sustainability, and excellence, we empower 
-          individuals and businesses with technology-driven solutions that foster economic growth 
-          and long-term value creation. Guided by integrity, expertise, and a client-first approach, 
-          we set industry benchmarks while driving development and wealth creation for Nigerians and 
-          global investors. Through our subsidiaries, we leverage synergy, strategic partnerships, and 
-          cutting-edge technology to shape a better future.
+          Highbridge Flipvest is a premier agricultural investment platform committed to 
+          empowering individuals and businesses with profitable, sustainable, 
+          and technology-driven farming opportunities. By leveraging innovation and strategic 
+          partnerships, we provide seamless access to high-yield agricultural ventures, fostering 
+          economic growth and long-term wealth creation. At Highbridge Flipvest, we bridge the gap 
+          between investors and the agricultural sector, ensuring transparency, efficiency, and maximum 
+          returns on investment.
           </p>
         </div>
 
@@ -95,4 +94,4 @@ const FooterGroup = () => {
   );
 };
 
-export default FooterGroup;
+export default FlipvestFooter;

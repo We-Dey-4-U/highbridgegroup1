@@ -11,6 +11,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import FAQ from "../components/FAQ";
 import { FaCommentDots } from "react-icons/fa"; // Import an icon from react-icons
 import { motion } from "framer-motion";
+import RegistrationModal from "../components/RegistrationModal";
 
 const images = [
   "/assets/images/hero/landhero2.png",
@@ -28,6 +29,7 @@ const investmentPlans = [
 const AgrovestWebinarPage  = () => {
     const [currentImage, setCurrentImage] = useState(0);
     const navigate = useNavigate(); // Add this line
+    const [isOpen, setIsOpen] = useState(false);
     
   
     // Create refs for each section

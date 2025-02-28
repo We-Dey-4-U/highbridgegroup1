@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AgrovestLandingPage.css"; // Ensure this CSS file exists
-import Footer from "../components/Footer";
+import FlipvestFooter from "../components/FlipvestFooter";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -188,9 +188,6 @@ const AgrovestLandingPage = () => {
   <button className="transparent-btn1" onClick={scrollToGallery}>
     Gallery
   </button>
-  <Link to="/payment" className="transparent-btn1">
-    Payment Gateway
-  </Link>
 </div>
 
           {/* Transparent registration button centered */}
@@ -213,7 +210,6 @@ const AgrovestLandingPage = () => {
         <Link to="/" onClick={toggleMobileNav}>Home</Link>
         <button onClick={() => { scrollToAbout(); toggleMobileNav(); }}>About Us</button>
         <button onClick={() => { scrollToGallery(); toggleMobileNav(); }}>Gallery</button>
-        <Link to="/payment" onClick={toggleMobileNav}>paynow</Link>
       </div>
 
       <SponsorSlider />
@@ -475,7 +471,7 @@ const AgrovestLandingPage = () => {
          ></iframe>
        </div>
       {/* Replace the old footer with the imported Footer component */}
-      <Footer />
+      <FlipvestFooter />
     </div>
   );
 };

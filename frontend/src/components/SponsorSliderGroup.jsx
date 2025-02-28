@@ -4,11 +4,10 @@ import "./SponsorSlider.css";
 const SponsorSliderGroup = () => {
   const sponsors = [
     "/assets/images/brandlogo/homes.png",
-    "/assets/images/brandlogo/farmcity.png",
-    "/assets/images/brandlogo/county.png",
-    "/assets/images/brandlogo/manor.png",
-    "/assets/images/brandlogo/haven.png", // Add more sponsors as needed
-    "/assets/images/brandlogo/lacost.png", // Add more sponsors as needed
+    "/assets/images/brandlogo/energy2.png",
+    "/assets/images/brandlogo/flipvestlogo2.png",
+    "/assets/images/brandlogo/luxuryde.jpg", // Add more sponsors as needed
+   
   ];
 
   return (

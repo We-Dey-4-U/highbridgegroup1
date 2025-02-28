@@ -14,13 +14,13 @@ const KYCForm = ({ onKycUpdate }) => {
     nextOfKin: {
       name: "",
       phone: "",
-      relationship: "",  // Added relationship field
-      address: ""
+      relationship: "",
+      address: "",
     },
     bankDetails: {
       bankName: "",
       accountNumber: "",
-      accountName: ""
+      accountName: "",
     },
     corporateInfo: {
       corporateName: "",
@@ -28,16 +28,17 @@ const KYCForm = ({ onKycUpdate }) => {
       contactName: "",
       correspondenceAddress: "",
       corporatePhone: "",
-      corporateEmail: ""
-    }
+      corporateEmail: "",
+    },
   });
-  
-  const [file, setFile] = useState(null);
+
+  const [idFile, setIdFile] = useState(null);
+  const [passportFile, setPassportFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     setKYCData((prev) => {
       const keys = name.split(".");
       if (keys.length === 2) {
@@ -55,16 +56,18 @@ const KYCForm = ({ onKycUpdate }) => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const { name, files } = e.target;
+    if (name === "idDocumentImage") {
+      setIdFile(files[0]);
+    } else if (name === "passportImage") {
+      setPassportFile(files[0]);
+    }
   };
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const formData = new FormData();
     formData.append("residentialAddress", kycData.residentialAddress);
     formData.append("dateOfBirth", kycData.dateOfBirth);
@@ -73,20 +76,23 @@ const KYCForm = ({ onKycUpdate }) => {
     formData.append("occupation", kycData.occupation);
     formData.append("idDocumentType", kycData.idDocumentType);
     formData.append("placeOfWork", kycData.placeOfWork);
-     formData.append("workAddress", kycData.workAddress);
-    // Convert nested objects to JSON strings
+    formData.append("workAddress", kycData.workAddress);
     formData.append("nextOfKin", JSON.stringify(kycData.nextOfKin));
     formData.append("bankDetails", JSON.stringify(kycData.bankDetails));
     formData.append("corporateInfo", JSON.stringify(kycData.corporateInfo));
-  
-    if (file) {
-      formData.append("idDocumentImage", file);
+
+    if (idFile) {
+      formData.append("idDocumentImage", idFile);
     }
-  
+
+    if (passportFile) {
+      formData.append("passportImage", passportFile);
+    }
+
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "https://highbridge-api-9.onrender.com/api/auth/update-kyc",
+      await axios.post(
+        "http://localhost:5000/api/auth/update-kyc",
         formData,
         {
           headers: {
@@ -104,22 +110,30 @@ const KYCForm = ({ onKycUpdate }) => {
     }
   };
 
-
-
-
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "8px", background: "#000", color: "#fff" }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        maxWidth: "500px",
+        margin: "auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        background: "#000",
+        color: "#fff",
+      }}
+    >
       <h2 style={{ textAlign: "center" }}>IoT-Enabled KYC Form</h2>
-      
-      <h3 style={{ color: 'white' }}>Personal Information</h3>
-      {['residentialAddress', 'dateOfBirth', 'nationality', 'maritalStatus', 'occupation', 'placeOfWork', 'workAddress'].map((key) => (
+
+      <h3 style={{ color: "white" }}>Personal Information</h3>
+      {["residentialAddress", "dateOfBirth", "nationality", "maritalStatus", "occupation", "placeOfWork", "workAddress"].map((key) => (
         <div key={key} style={{ marginBottom: "15px" }}>
           <label>{key.replace(/([A-Z])/g, " $1").trim()}</label>
           <input type="text" name={key} value={kycData[key]} onChange={handleChange} required />
         </div>
       ))}
 
-      <h3 style={{ color: 'white' }}>Next of Kin</h3>
+      <h3 style={{ color: "white" }}>Next of Kin</h3>
       {Object.keys(kycData.nextOfKin).map((subKey) => (
         <div key={`nextOfKin.${subKey}`} style={{ marginBottom: "15px" }}>
           <label>{subKey.replace(/([A-Z])/g, " $1").trim()}</label>
@@ -127,7 +141,7 @@ const KYCForm = ({ onKycUpdate }) => {
         </div>
       ))}
 
-<h3 style={{ color: 'white' }}>Bank Details</h3>
+      <h3 style={{ color: "white" }}>Bank Details</h3>
       {Object.keys(kycData.bankDetails).map((subKey) => (
         <div key={`bankDetails.${subKey}`} style={{ marginBottom: "15px" }}>
           <label>{subKey.replace(/([A-Z])/g, " $1").trim()}</label>
@@ -135,7 +149,7 @@ const KYCForm = ({ onKycUpdate }) => {
         </div>
       ))}
 
-<h3 style={{ color: 'white' }}>Corporate Information</h3>
+      <h3 style={{ color: "white" }}>Corporate Information</h3>
       {Object.keys(kycData.corporateInfo).map((subKey) => (
         <div key={`corporateInfo.${subKey}`} style={{ marginBottom: "15px" }}>
           <label>{subKey.replace(/([A-Z])/g, " $1").trim()}</label>
@@ -155,10 +169,27 @@ const KYCForm = ({ onKycUpdate }) => {
 
       <div style={{ marginBottom: "15px" }}>
         <label>Upload ID Document</label>
-        <input type="file" onChange={handleFileChange} required />
+        <input type="file" name="idDocumentImage" onChange={handleFileChange} required />
       </div>
 
-      <button type="submit" disabled={loading} style={{ width: "100%", padding: "10px", background: "#007bff", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer" }}>
+      <div style={{ marginBottom: "15px" }}>
+        <label>Upload Passport Image</label>
+        <input type="file" name="passportImage" onChange={handleFileChange} required />
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        style={{
+          width: "100%",
+          padding: "10px",
+          background: "#007bff",
+          color: "#fff",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+      >
         {loading ? "Submitting..." : "Submit KYC"}
       </button>
     </form>
