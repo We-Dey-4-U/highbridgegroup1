@@ -9,10 +9,10 @@ import edImage from "../assets/ed.jpg"; // Correct path for ED
 
 // Executive members array with names and roles
 const executiveMembers = [
-    { name: "Engr. Olawale Popoola", role: "Managing Director", company: "Your Company Name", image: mdImage }, // Correct path for MD 
-    { name: "Mrs.Busayo Popoola", role: "Executive Director", company: "Your Company Name", image: edImage }, // Correct path for ED 
-    { name: "Suleiman David", role: "General Manager", company: "Your Company Name", image: gmImage }, // Correct path for GM 
-    { name: "Mrs. Lilian Ezenwanagu", role: "Human Resources", company: "Your Company Name", image: hrImage }, // Correct path for HR
+    { name: "Engr. Olawale Popoola", role: "Managing Director", company: "HighbridgeGroup", image: mdImage }, // Correct path for MD 
+    { name: "Mrs.Busayo Popoola", role: "Executive Director", company: "HighbridgeGroup", image: edImage }, // Correct path for ED 
+    { name: "Suleiman David", role: "General Manager", company: "HighbridgeGroup", image: gmImage }, // Correct path for GM 
+    { name: "Mrs. Lilian Ezenwanagu", role: "Human Resources", company: "HighbridgeGroup", image: hrImage }, // Correct path for HR
     
 ];
 

@@ -2,12 +2,18 @@ import React from "react";
 import "./Team.css";
 
 const allTeamMembers = [
-  { name: "Team A Member 1", role: "Developer", image: "/images/member1.jpg" },
-  { name: "Team A Member 2", role: "Designer", image: "/images/member2.jpg" },
-  { name: "Team B Member 1", role: "Analyst", image: "/images/member3.jpg" },
-  { name: "Team B Member 2", role: "Tester", image: "/images/member4.jpg" },
-  { name: "Team C Member 1", role: "Manager", image: "/images/member5.jpg" },
-  { name: "Team C Member 2", role: "Support", image: "/images/member6.jpg" },
+  { name: "Team A Member 1", role: "Developer", company: "HighbridgeGroup", image: "/images/member1.jpg" },
+  { name: "Team A Member 2", role: "Designer", company: "HighbridgeGroup", image: "/images/member2.jpg" },
+  { name: "Team B Member 1", role: "Analyst", company: "HighbridgeGroup", image: "/images/member3.jpg" },
+  { name: "Team B Member 2", role: "Tester", company: "HighbridgeGroup", image: "/images/member4.jpg" },
+  { name: "Team C Member 1", role: "Manager", company: "HighbridgeGroup", image: "/images/member5.jpg" },
+  { name: "Team C Member 2", role: "Support", company: "HighbridgeGroup", image: "/images/member6.jpg" },
+  { name: "Team C Member 1", role: "Manager", company: "HighbridgeGroup", image: "/images/member5.jpg" },
+  { name: "Team C Member 2", role: "Support", company: "HighbridgeGroup", image: "/images/member6.jpg" },
+  { name: "Team C Member 1", role: "Manager", company: "HighbridgeGroup", image: "/images/member5.jpg" },
+  { name: "Team C Member 2", role: "Support", company: "HighbridgeGroup", image: "/images/member6.jpg" },
+  { name: "Team C Member 1", role: "Manager", company: "HighbridgeGroup", image: "/images/member5.jpg" },
+  { name: "Team C Member 2", role: "Support", company: "HighbridgeGroup", image: "/images/member6.jpg" },
 ];
 
 const AllTeams = () => {
@@ -24,6 +30,7 @@ const AllTeams = () => {
             />
             <h3 className="team-name">{member.name}</h3>
             <p className="team-role">{member.role}</p>
+            <p className="team-company">{member.company}</p> {/* Added company name */}
           </div>
         ))}
       </div>

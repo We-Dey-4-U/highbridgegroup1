@@ -20,68 +20,93 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState("");
   const [investmentAmount, setInvestmentAmount] = useState(500000);
+  const [paymentMethod, setPaymentMethod] = useState("flutterwave");
+  const [paymentReceipt, setPaymentReceipt] = useState(null);
   const [paymentLink, setPaymentLink] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [investmentData, setInvestmentData] = useState([]); // ✅ State for Chart Data
   const [investmentCountdowns, setInvestmentCountdowns] = useState({});
   const [referralCode, setReferralCode] = useState("");
 const fullReferralCode = `REF-${referralCode}`;
 const [isKycModalOpen, setKycModalOpen] = useState(false);
+const [successMessage, setSuccessMessage] = useState("");
+const [rememberManualPayment, setRememberManualPayment] = useState(false);
 
   
  
 
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.warn("🔴 No token found, redirecting to login...");
-          navigate("/login");
-          return;
-        }
-        console.log("🟢 Fetching dashboard data...");
-        //http://localhost:5000/api/dashboard
+useEffect(() => {
+  const fetchDashboardData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("🔴 No token found, redirecting to login...");
+        navigate("/login");
+        return;
+      }
 
-        const response = await axios.get("https://highbridge-api-9.onrender.com/api/dashboard", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log("✅ API Response:", response.data);
-        // Ensure the KYC verification field is updated
+      console.log("🟢 Fetching dashboard data...");
+      const response = await axios.get("http://localhost:5000/api/dashboard", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      console.log("✅ API Response:", response.data);
+
       if (response.data.kycApproved) {
         response.data.kycVerified = true;
       }
-        console.log("📌 Referral Code from API:", response.data.referralCode);
 
-        setUser(response.data);
-        setReferralCode(response.data.referralCode || "N/A"); // ✅ Store referral code
-       // ✅ Process Data for Chart
-const formattedData = response.data.investments
-? response.data.investments.map((investment) => {
-    const plan = investmentPlans.find((p) => p.value === investment.plan); // ✅ Match using value instead of label
-    const percentage = plan ? parseFloat(plan.label.match(/(\d+)%/)[1]) : 0; // ✅ Extract percentage correctly
-    const expectedReturns = plan ? (investment.amount * percentage) / 100 : 0;
-    return {
-      name: investment.plan,
-      amount: investment.amount,
-      expectedReturns,
-    };
-  })
-: [];
+      // Merge investments with existing user investments
+      setUser((prevUser) => {
+        const newInvestments = response.data.investments || [];
+      
+        // Remove duplicates by checking if investment already exists
+        const mergedInvestments = newInvestments.filter(
+          (newInv) => !prevUser?.investments?.some((oldInv) => oldInv._id === newInv._id)
+        );
 
-        console.log("📊 Formatted Investment Data:", formattedData);
-        setInvestmentData(formattedData);
-      } catch (error) {
-        console.error("🛑 Error fetching dashboard data:", error.response?.data || error.message);
-        setErrorMessage("⚠️ Failed to load dashboard. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
+        console.log("📊 Merged Investments Data:", mergedInvestments);
 
-    fetchDashboardData();
-  }, [navigate]);
+        return {
+          ...response.data,
+          investments: [...(prevUser?.investments || []), ...mergedInvestments],
+        };
+      });
+
+      setReferralCode(response.data.referralCode || "N/A");
+
+      // ✅ Process Investments for Chart (Including Manual Payments)
+      const formattedData = response.data.investments
+        ? response.data.investments.map((investment) => {
+            const plan = investmentPlans.find((p) => p.value === investment.plan);
+            const percentage = plan ? parseFloat(plan.label.match(/(\d+)%/)[1]) : 0;
+            const expectedReturns = plan ? (investment.amount * percentage) / 100 : 0;
+
+            return {
+              name: investment.plan,
+              amount: investment.amount,
+              expectedReturns,
+              paymentMethod: investment.paymentMethod || "manual", // Ensure manual payments are included
+              status: investment.status || "Pending",
+            };
+          })
+        : [];
+
+      console.log("📊 Updated Investment Data:", formattedData);
+      setInvestmentData(formattedData);
+    } catch (error) {
+      console.error("🛑 Error fetching dashboard data:", error.response?.data || error.message);
+      setErrorMessage("⚠️ Failed to load dashboard. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchDashboardData();
+}, [navigate]);
+
 
 
 
@@ -99,6 +124,9 @@ const formattedData = response.data.investments
       setInvestmentCountdowns(countdowns);
     }
   }, [user]);
+
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -138,77 +166,151 @@ const formattedData = response.data.investments
   };
 
 
-
-
-
-  const handlePayment = async () => {
-    console.log("👤 User Data: ", user);
-    console.log("📌 Selected Plan: ", selectedPlan);
-    console.log("💰 Investment Amount: ", investmentAmount);
-
-    try {
-        if (!selectedPlan) {
-            setErrorMessage("⚠️ Please select an investment plan.");
-            return;
-        }
-        if (investmentAmount < 500000) {
-            setErrorMessage("⚠️ Minimum investment is ₦500,000.");
-            return;
-        }
-
-        setProcessing(true);
-        setErrorMessage("");
-
-        const token = localStorage.getItem("token");
-
-        const planDetails = investmentPlans.find(plan => plan.value === selectedPlan);
-        const expectedReturns = planDetails 
-            ? (investmentAmount * parseFloat(planDetails.label.match(/\d+/)[0]) / 100) 
-            : 0;
-
-       const webhookUrl = "https://highbridge-api-9.onrender.com/api/payments/webhook"; // ✅ Corrected URL
-
-        const paymentData = {
-            amount: investmentAmount,
-            plan: selectedPlan,
-            email: user.email || "",
-            phone: user.phone || "",
-            currency: "NGN",
-            fullName: user.name || "",
-            expectedReturns,
-            webhookUrl  // ✅ Include Webhook URL
-        };
-
-        console.log("🚀 Sending Payment Data:", paymentData);
-
-        const paymentResponse = await axios.post(
-            "https://highbridge-api-9.onrender.com/api/payments/initiate-flutterwave-payment",
-            paymentData,
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        console.log("✅ Full API Response:", paymentResponse);
-
-        // Ensure the response contains the expected structure
-        if (paymentResponse.data && paymentResponse.data.redirectUrl) {
-            console.log("🔗 Payment Link:", paymentResponse.data.redirectUrl);
-            setPaymentLink(paymentResponse.data.redirectUrl);
-            window.location.href = paymentResponse.data.redirectUrl;
-        } else {
-            console.error("🛑 Unexpected Response Structure:", paymentResponse.data);
-            setErrorMessage("⚠️ Error generating payment link. Please try again.");
-        }
-    } catch (error) {
-        console.error("🛑 Payment API Error:", error.response?.data || error.message);
-        setErrorMessage(error.response?.data?.message || "⚠️ Payment failed. Please try again.");
-    } finally {
-        setProcessing(false);
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value);
+    if (e.target.value === "manual") {
+        setIsPaymentModalOpen(true);
     }
+    setRememberManualPayment(false); // Reset when switching methods
 };
 
 
+  const handleReceiptUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        console.log("📂 Selected File:", file);
+        setPaymentReceipt(file);
+    } else {
+        console.warn("⚠️ No file selected");
+    }
+};
+
+  
+
+const handlePayment = async () => {
+  console.log("👤 User Data: ", user);
+  console.log("📌 Selected Plan: ", selectedPlan);
+  console.log("💰 Investment Amount: ", investmentAmount);
+  console.log("💳 Selected Payment Method: ", paymentMethod);
+
+  try {
+      if (!selectedPlan) {
+          setErrorMessage("⚠️ Please select an investment plan.");
+          return;
+      }
+      if (investmentAmount < 500000) {
+          setErrorMessage("⚠️ Minimum investment is ₦500,000.");
+          return;
+      }
+      if (!paymentMethod) {
+          setErrorMessage("⚠️ Please select a payment method.");
+          return;
+      }
+      if (paymentMethod === "manual" && !paymentReceipt) {
+          setErrorMessage("⚠️ Please upload your payment receipt.");
+          return;
+      }
+
+      setProcessing(true);
+      setErrorMessage("");
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+          console.warn("🔴 No token found, redirecting to login...");
+          navigate("/login");
+          return;
+      }
+
+      const selectedPlanDetails = investmentPlans.find((p) => p.value === selectedPlan);
+      const percentage = selectedPlanDetails ? parseFloat(selectedPlanDetails.label.match(/(\d+)%/)[1]) : 0;
+      const expectedReturns = (investmentAmount * percentage) / 100;
+
+      if (paymentMethod === "flutterwave") {
+          const paymentData = {
+              amount: investmentAmount,
+              plan: selectedPlan,
+              email: user.email || "",
+              phone: user.phone || "",
+              currency: "NGN",
+              fullName: user.name || "",
+              expectedReturns,
+          };
+
+          console.log("🚀 Sending Payment Data:", paymentData);
+          const response = await axios.post(
+              "http://localhost:5000/api/payments/initiate-flutterwave-payment",
+              paymentData,
+              { headers: { Authorization: `Bearer ${token}` } }
+          );
+
+          console.log("✅ API Response:", response.data);
+
+          if (response.data?.redirectUrl) {
+              console.log("🔗 Redirecting to:", response.data.redirectUrl);
+              window.location.href = response.data.redirectUrl;
+          } else {
+              setErrorMessage("⚠️ Payment link generation failed. Try again.");
+          }
+      } else if (paymentMethod === "manual") {
+          const formData = new FormData();
+          formData.append("amount", investmentAmount);
+          formData.append("plan", selectedPlan);
+          formData.append("paymentMethod", paymentMethod);
+          formData.append("receipt", paymentReceipt); // Ensure this is a File object
+
+          const manualResponse = await axios.post(
+              "http://localhost:5000/api/payments/manual-payment",
+              formData,
+              {
+                  headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "multipart/form-data",
+                  },
+              }
+          );
+
+          console.log("✅ Manual Payment Response:", manualResponse.data);
+
+          if (manualResponse.data.success) {
+              setSuccessMessage("✅ Manual payment submitted successfully. Fetching updated investments...");
+
+              const updatedResponse = await axios.get("http://localhost:5000/api/dashboard", {
+                  headers: { Authorization: `Bearer ${token}` },
+              });
+
+              console.log("🔄 Updated Investment Data:", updatedResponse.data.investments);
+
+              if (updatedResponse.data.investments) {
+                  const formattedData = updatedResponse.data.investments.map((investment) => {
+                      const plan = investmentPlans.find((p) => p.value === investment.plan);
+                      const percentage = plan ? parseFloat(plan.label.match(/(\d+)%/)[1]) : 0;
+                      const expectedReturns = plan ? (investment.amount * percentage) / 100 : 0;
+
+                      return {
+                          name: investment.plan,
+                          amount: investment.amount,
+                          expectedReturns,
+                          paymentMethod: investment.paymentMethod || "manual",
+                          status: investment.status || "Pending",
+                      };
+                  });
+                  setInvestmentData(formattedData);
+              }
+          } else {
+              setErrorMessage("⚠️ Failed to submit manual payment. Please try again.");
+          }
+      }
+  } catch (error) {
+      console.error("🛑 Error processing payment:", error.response?.data || error.message);
+      setErrorMessage("⚠️ Payment processing failed. Please try again.");
+  } finally {
+      setProcessing(false);
+  }
+};
+
 
   if (loading) return <p>Loading dashboard...</p>;
+
 
   return (
     <div className="dashboard-container">
@@ -286,11 +388,22 @@ const formattedData = response.data.investments
         {/* ✅ Bar Colors */}
         <Bar dataKey="amount" fill="#4CAF50" name="Investment Amount" />
         <Bar 
-  dataKey="expectedReturns" 
-  fill="#FFC107" 
-  name="Expected Returns"
-  label={{ position: "top", fill: "white" }} // 🔥 Ensures values show above bars
-/>
+          dataKey="expectedReturns" 
+          fill="#FFC107" 
+          name="Expected Returns"
+          label={{ position: "top", fill: "white" }} // 🔥 Ensures values show above bars
+        />
+        <Bar 
+          dataKey="manualPayments" 
+          fill="#FF5733" 
+          name="Manual Payments" 
+          label={{ position: "top", fill: "white" }} 
+        />
+        
+        {/* ✅ Display Payment Method as a text label */}
+        {investmentData.some(item => item.paymentMethod) && (
+          <Bar dataKey="paymentMethod" fill="#2196F3" name="Payment Method" />
+        )}
       </BarChart>
     </ResponsiveContainer>
   ) : (
@@ -298,8 +411,29 @@ const formattedData = response.data.investments
   )}
 </div>
 
+
+
+
+{isPaymentModalOpen && (
+  <div className="custom-modal-overlay" onClick={() => setIsPaymentModalOpen(false)}>
+    <div className="custom-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-header">
+      <h2 style={{ color: "black" }}>Account Payment Details</h2>
+        <button className="close-modal-btn" onClick={() => setIsPaymentModalOpen(false)}>X</button>
+      </div>
+      <div className="modal-body">
+        <p><strong>Bank Name:</strong> XYZ Bank</p>
+        <p><strong>Account Name:</strong> ABC Investments</p>
+        <p><strong>Account Number:</strong> 1234567890</p>
+        <p>Please make the payment and upload the receipt to proceed.</p>
+      </div>
+    </div>
+  </div>
+)}
+
       {/* ✅ User Investments */}
      {/* ✅ User Investments */}
+{/* ✅ User Investments */}
 <h2>Your Investments</h2>
 <div className="investments-container">
   {user?.investments?.length ? (
@@ -314,6 +448,8 @@ const formattedData = response.data.investments
             <th>Maturity Date</th>
             <th>Countdown</th>
             <th>Expected Returns</th>
+            <th>Payment Method</th> {/* ✅ NEW COLUMN */}
+            <th>Receipt</th> {/* ✅ NEW COLUMN (for manual payments) */}
           </tr>
         </thead>
         <tbody>
@@ -330,18 +466,26 @@ const formattedData = response.data.investments
               <td>{new Date(investment.startDate).toDateString()}</td>
               <td>{new Date(investment.maturityDate).toDateString()}</td>
               <td>
-               {investment.status === "active"
-               ? new Date(investment.maturityDate) > new Date()
-              ? formatTime(new Date(investment.maturityDate) - new Date())
-              : "N/A"
-             : "N/A"}
-          </td>
+                {investment.status === "active"
+                  ? new Date(investment.maturityDate) > new Date()
+                    ? formatTime(new Date(investment.maturityDate) - new Date())
+                    : "N/A"
+                  : "N/A"}
+              </td>
               <td>
                 {new Intl.NumberFormat("en-NG", {
                   style: "currency",
                   currency: "NGN",
                 }).format(investment.expectedReturns)}
               </td>
+              <td>{investment.paymentMethod === "manual" ? "Manual Payment" : "Flutterwave"}</td> {/* ✅ Show payment method */}
+              <td>
+                {investment.paymentMethod === "manual" && investment.receiptUrl ? (
+                  <a href={investment.receiptUrl} target="_blank" rel="noopener noreferrer">
+                    View Receipt
+                  </a>
+                ) : "N/A"}
+              </td> {/* ✅ Show receipt link if available */}
             </tr>
           ))}
         </tbody>
@@ -352,26 +496,56 @@ const formattedData = response.data.investments
   )}
 </div>
 
-      {/* ✅ Investment Form */}
-      <h2>Invest Now</h2>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <div className="investment-form">
-        <label>Select Investment Plan:</label>
-        <select value={selectedPlan} onChange={handlePlanChange}>
-          <option value="">Select Plan</option>
-          {investmentPlans.map(plan => (
-            <option key={plan.value} value={plan.value}>{plan.label}</option>
-          ))}
-        </select>
 
-        <label>Enter Investment Amount:</label>
-        <input type="number" value={investmentAmount} min={500000} onChange={(e) => setInvestmentAmount(Number(e.target.value))} />
 
-        <button onClick={handlePayment} disabled={processing || !selectedPlan || investmentAmount < 500000}>
-          {processing ? "Processing..." : "Pay with Flutterwave"}
-        </button>
-      </div>
+
+
+<div className="investment-form">
+  <h2>Make an Investment</h2>
+  
+  <label>Investment Plan:</label>
+  <select value={selectedPlan} onChange={handlePlanChange}>
+    <option value="">Select a plan</option>
+    {investmentPlans.map((plan) => (
+      <option key={plan.value} value={plan.value}>{plan.label}</option>
+    ))}
+  </select>
+
+  <label>Investment Amount (₦):</label>
+  <input
+    type="number"
+    value={investmentAmount}
+    onChange={(e) => setInvestmentAmount(parseInt(e.target.value, 10))}
+  />
+
+<label>Select Payment Method:</label>
+<select value={paymentMethod} onChange={handlePaymentMethodChange}>
+  <option value="flutterwave">Pay with Flutterwave</option>
+  <option value="manual">Manual Payment</option>
+</select>
+
+  {/* Show receipt upload if Manual Payment is selected */}
+  {paymentMethod === "manual" && (
+  <>
+    <label>Upload Payment Receipt:</label>
+    <input type="file" onChange={handleReceiptUpload} accept="image/*" />
+  </>
+)}
+
+  {/* Show Flutterwave payment link if available */}
+  {paymentMethod === "flutterwave" && paymentLink && (
+    <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="payment-link">
+      Proceed to Payment
+    </a>
+  )}
+
+  <button onClick={handlePayment} disabled={processing}>
+    {processing ? "Processing..." : "Proceed with Payment"}
+  </button>
+
+  {errorMessage && <p className="error">{errorMessage}</p>}
+</div>
 
       {paymentLink && <a href={paymentLink} target="_blank" rel="noopener noreferrer">Proceed to Payment</a>}
 

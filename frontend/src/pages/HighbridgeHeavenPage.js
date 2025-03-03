@@ -5,7 +5,7 @@ import { FaMapMarkerAlt, FaShieldAlt, FaRoad, FaFaucet, FaLightbulb, FaUmbrellaB
 
 const HighbridgeHeavenPage = () => {
   const [mainImg, setMainImg] = useState(
-    "/assets/images/highbridge-heaven-main.jpg"
+    "/assets/images/haven/haven45.jpg"
   );
 
   const smallImages = [

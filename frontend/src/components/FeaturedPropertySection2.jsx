@@ -7,20 +7,29 @@ const FeaturedPropertySection2= () => {
     <section className="featured-properties">
       <h2>Our Selling Estates</h2>
       <div className="property-grid">
-        <Link to="/heaven" className="property-card">
-          <div className="property-inner">
-            <div className="property-front">
-              <img src="/assets/images/featured-property1.jpg" alt="Highbridge Heaven" />
-            </div>
-            <div className="property-back">
-            <h3>HIGHBRIDGE Haven</h3> {/* Added "Hi" header */}
-              <div className="property-description">
-                <p>Experience the luxury of Highbridge Heaven with modern amenities and serene views.</p>
-              </div>
-              <p>View Full Details</p>
-            </div>
-          </div>
-        </Link>
+      <Link to="/heaven" className="property-card">
+  <div className="property-inner">
+    <div className="property-front" style={{ overflow: "hidden" }}>
+      <img 
+        src="/assets/images/haven/haven45.jpg" 
+        alt="Highbridge Heaven" 
+        style={{ 
+          width: "100%", 
+          height: "100%", 
+          objectFit: "cover", 
+          objectPosition: "center" 
+        }} 
+      />
+    </div>
+    <div className="property-back">
+      <h3>HIGHBRIDGE Haven</h3> {/* Added "Hi" header */}
+      <div className="property-description">
+        <p>Experience the luxury of Highbridge Heaven with modern amenities and serene views.</p>
+      </div>
+      <p>View Full Details</p>
+    </div>
+  </div>
+</Link>
 
        
         <Link to="/residence" className="property-card">

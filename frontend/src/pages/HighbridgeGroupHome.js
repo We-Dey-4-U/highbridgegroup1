@@ -10,6 +10,7 @@ import ScrollElementGroup from "../components/ScrollElementGroup";
 import CounterGridGroup from "../components/CounterGridGroup";
 import ContactUs from "../components/ContactUs"; // Import ContactUs component
 import ExecutiveTeamGroup from "../components/ExecutiveTeamGroup"; // Import the ExecutiveTeamGroup component
+import LatestNews from "../components/LatestNews"; // Import LatestNews Component
 
 const HighBridgeGroupHome = () => {
   return (
@@ -29,6 +30,10 @@ const HighBridgeGroupHome = () => {
       </ScrollElementGroup>
       <ScrollElementGroup>
         <ExecutiveTeamGroup /> {/* Add ExecutiveTeamGroup component here */}
+      </ScrollElementGroup>
+       {/* New LatestNews Section for Real-Time Updates */}
+       <ScrollElementGroup>
+        <LatestNews />
       </ScrollElementGroup>
       <ScrollElementGroup>
       <ContactUs /> {/* Replace FAQGroup with ContactUs */}

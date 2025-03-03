@@ -499,11 +499,7 @@ html {
 }
 
 
-
-
-
-
-.modal {
+.modal2 {
   position: fixed;
   top: 50%;
   background: green; /* Green background */

@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./AgrovestLandingPage.css"; // Ensure this CSS file exists
+import "./AgrovestLandingPage2.css"; // Ensure this CSS file exists
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
