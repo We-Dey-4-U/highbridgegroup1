@@ -271,7 +271,7 @@ const handlePayment = async () => {
 
           console.log("✅ Manual Payment Response:", manualResponse.data);
 
-          if (manualResponse.data.success) {
+          if (manualResponse.data && manualResponse.data.success === true) {
               setSuccessMessage("✅ Manual payment submitted successfully. Fetching updated investments...");
 
               const updatedResponse = await axios.get("http://localhost:5000/api/dashboard", {
@@ -422,9 +422,9 @@ const handlePayment = async () => {
         <button className="close-modal-btn" onClick={() => setIsPaymentModalOpen(false)}>X</button>
       </div>
       <div className="modal-body">
-        <p><strong>Bank Name:</strong> XYZ Bank</p>
-        <p><strong>Account Name:</strong> ABC Investments</p>
-        <p><strong>Account Number:</strong> 1234567890</p>
+        <p><strong>Bank Name:</strong> ZENITH Bank</p>
+        <p><strong>Account Name:</strong> HIGHBRIDGE FLIPVEST LIMITED</p>
+        <p><strong>Account Number:</strong> 1229557601</p>
         <p>Please make the payment and upload the receipt to proceed.</p>
       </div>
     </div>

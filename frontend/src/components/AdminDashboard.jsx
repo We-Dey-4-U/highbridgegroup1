@@ -78,6 +78,30 @@ const AdminDashboard = () => {
     }
   };
 
+
+
+  const handleApprovePayment = async (investmentId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `http://localhost:5000/api/admin/approve-payment/${investmentId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      alert(response.data.message || "Payment approved successfully!");
+      fetchInvestments(); // Refresh investments list
+    } catch (error) {
+      console.error("Error approving payment:", error);
+      alert(error.response?.data?.message || "Failed to approve payment. Please try again.");
+    }
+  };
+
+
+
+
+
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -214,34 +238,61 @@ const AdminDashboard = () => {
     </div>
   </div>
 )}
+
+
+
         <section>
-          <h2 style={{ color: 'black' }}>Investments</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {investments.length > 0 ? (
-                investments.map(investment => (
-                  investment.user ? (
-                    <tr key={investment.id}>
-                      <td>{investment.id}</td>
-                      <td>{investment.user.name || "N/A"} ({investment.user.email || "N/A"})</td>
-                      <td>${investment.amount}</td>
-                    </tr>
-                  ) : null
-                ))
-              ) : (
+        <h2>Investments</h2>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <table>
+              <thead>
                 <tr>
-                  <td colSpan="3">No investments found.</td>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Amount</th>
+                  <th>Plan</th>
+                  <th>Start Date</th>
+                  <th>Maturity Date</th>
+                  <th>Expected Returns</th>
+                  <th>Status</th>
+                  <th>Payment Method</th>
+                  <th>Receipt</th>
+                  <th>Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {investments.map((investment) => (
+                  <tr key={investment._id}>
+                    <td>{investment._id}</td>
+                    <td>{investment.user?.name || "N/A"}</td>
+                    <td>${investment.amount}</td>
+                    <td>{investment.plan}</td>
+                    <td>{new Date(investment.startDate).toLocaleDateString()}</td>
+                    <td>{new Date(investment.maturityDate).toLocaleDateString()}</td>
+                    <td>${investment.expectedReturns}</td>
+                    <td>{investment.status}</td>
+                    <td>{investment.paymentMethod}</td>
+                    <td>
+                      {investment.paymentMethod === "manual" && investment.receipt ? (
+                        <a href={investment.receipt} target="_blank" rel="noopener noreferrer">
+                          View Receipt
+                        </a>
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
+                    <td>
+                      {investment.status === "Pending" && investment.paymentMethod === "manual" && (
+                        <button onClick={() => handleApprovePayment(investment._id)}>Approve</button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </section>
       </div>
     </div>
