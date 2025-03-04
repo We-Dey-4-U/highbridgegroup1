@@ -61,7 +61,7 @@ useEffect(() => {
       // Merge investments with existing user investments
       setUser((prevUser) => {
         const newInvestments = response.data.investments || [];
-      
+        
         // Remove duplicates by checking if investment already exists
         const mergedInvestments = newInvestments.filter(
           (newInv) => !prevUser?.investments?.some((oldInv) => oldInv._id === newInv._id)
@@ -77,7 +77,7 @@ useEffect(() => {
 
       setReferralCode(response.data.referralCode || "N/A");
 
-      // ✅ Process Investments for Chart (Including Manual Payments)
+      // ✅ Process Investments for Chart (Ensuring Correct Payment Method)
       const formattedData = response.data.investments
         ? response.data.investments.map((investment) => {
             const plan = investmentPlans.find((p) => p.value === investment.plan);
@@ -88,7 +88,7 @@ useEffect(() => {
               name: investment.plan,
               amount: investment.amount,
               expectedReturns,
-              paymentMethod: investment.paymentMethod || "manual", // Ensure manual payments are included
+              paymentMethod: investment.paymentMethod || "manual", // ✅ Ensure correct payment method
               status: investment.status || "Pending",
             };
           })
@@ -185,6 +185,16 @@ useEffect(() => {
     }
 };
 
+
+
+
+
+
+
+
+
+
+
   
 
 const handlePayment = async () => {
@@ -234,6 +244,7 @@ const handlePayment = async () => {
               currency: "NGN",
               fullName: user.name || "",
               expectedReturns,
+              paymentMethod, // ✅ Ensure paymentMethod is included
           };
 
           console.log("🚀 Sending Payment Data:", paymentData);
@@ -255,8 +266,8 @@ const handlePayment = async () => {
           const formData = new FormData();
           formData.append("amount", investmentAmount);
           formData.append("plan", selectedPlan);
-          formData.append("paymentMethod", paymentMethod);
-          formData.append("receipt", paymentReceipt); // Ensure this is a File object
+          formData.append("paymentMethod", paymentMethod); // ✅ Include payment method
+          formData.append("receipt", paymentReceipt);
 
           const manualResponse = await axios.post(
               "http://localhost:5000/api/payments/manual-payment",
@@ -290,7 +301,7 @@ const handlePayment = async () => {
                           name: investment.plan,
                           amount: investment.amount,
                           expectedReturns,
-                          paymentMethod: investment.paymentMethod || "manual",
+                          paymentMethod: investment.paymentMethod || "manual", // ✅ Ensure paymentMethod is stored
                           status: investment.status || "Pending",
                       };
                   });
@@ -310,6 +321,14 @@ const handlePayment = async () => {
 
 
   if (loading) return <p>Loading dashboard...</p>;
+
+
+
+
+
+
+
+
 
 
   return (
@@ -495,9 +514,6 @@ const handlePayment = async () => {
     <p style={{ color: "white" }}>No active investments</p>
   )}
 </div>
-
-
-
 
 
 
