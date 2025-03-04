@@ -146,6 +146,45 @@
     font-weight: 500;
 }
 
+
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.investment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.investment-table th,
+.investment-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.investment-table th {
+  background-color: #004d00; /* Dark green */
+  color: white;
+}
+
+.investment-row {
+  background-color: #008000; /* Green background for rows */
+  color: white;
+}
+
+.investment-row a {
+  color: #ffcc00; /* Gold color for links */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.investment-row a:hover {
+  text-decoration: underline;
+}
+
   
   /* Responsive Design */
   @media (max-width: 768px) {

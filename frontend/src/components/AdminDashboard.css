@@ -321,3 +321,57 @@ h3 {
       page-break-inside: avoid;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Table container to enable scrolling */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  max-height: 300px; /* Adjust height as needed */
+}
+
+/* Ensure the table maintains layout */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Ensures scrolling is possible if content is wide */
+}
+
+/* Make sure table headers are fixed */
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #f8f8f8; /* Ensures readability */
+  z-index: 2;
+}
+
+/* Styling to improve readability */
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Responsive fix */
+@media (max-width: 768px) {
+  .table-container {
+    max-height: 250px;
+  }
+  
+  table {
+    font-size: 14px; /* Reduce font size for better fit */
+  }
+}

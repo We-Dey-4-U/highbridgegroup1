@@ -10,6 +10,8 @@ const AdminDashboard = () => {
   const [selectedKYC, setSelectedKYC] = useState(null);
   const [investments, setInvestments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,6 +102,32 @@ const AdminDashboard = () => {
 
 
 
+  const handleDeleteInvestment = async (investmentId) => {
+    if (!window.confirm("Are you sure you want to delete this investment?")) return;
+  
+    try {
+      const token = localStorage.getItem("token"); // Add this line to retrieve token
+      const response = await fetch(`http://localhost:5000/api/admin/investments/${investmentId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Use the retrieved token
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert(data.message);
+        setInvestments((prev) => prev.filter((inv) => inv._id !== investmentId));
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error deleting investment:", error);
+      alert("Server error, try again later.");
+    }
+  };
 
 
   const handleLogout = () => {
@@ -107,6 +135,13 @@ const AdminDashboard = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+
+
+   // Pagination Logic
+   const indexOfLastUser = currentPage * usersPerPage;
+   const indexOfFirstUser = indexOfLastUser - usersPerPage;
+   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+   const totalPages = Math.ceil(users.length / usersPerPage);
 
   const printKYC = () => {
     window.print();
@@ -120,43 +155,52 @@ const AdminDashboard = () => {
         <button className="logout-button" onClick={handleLogout}>Logout</button>
 
         <section>
-        <h2 style={{ color: 'black' }}>Users</h2>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <table>
-             <thead>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Referral Code</th>
-    <th>Referred By</th>
-    <th>Actions</th>
-  </tr>
-</thead>
-              <tbody>
-              {users.map(user => (
-    <tr key={user.id}>
-      <td>{user.id}</td>
-      <td>{user.name}</td>
-      <td>{user.email}</td>
-      <td>{user.referralCode}</td>
-      <td>{user.referer}</td>
-      <td>
-      <button onClick={() => {
-  console.log("[SELECTED KYC USER]", user);
-  setSelectedKYC(user);
-}}>
-  View KYC
-</button>
-      </td>
-    </tr>
-  ))}
-              </tbody>
-            </table>
-          )}
-        </section>
+  <h2 style={{ color: 'black' }}>Users</h2>
+  {loading ? (
+    <p>Loading...</p>
+  ) : (
+    <div className="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Referral Code</th>
+            <th>Referred By</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.referralCode}</td>
+              <td>{user.referer}</td>
+              <td>
+                <button onClick={() => setSelectedKYC(user)}>View KYC</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+       {/* Pagination Controls */}
+       {totalPages > 1 && (
+                <div className="pagination">
+                  <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                  <span>Page {currentPage} of {totalPages}</span>
+                  <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                </div>
+              )}
+    </div>
+  )}
+</section>
+
+
+
+
 
         {selectedKYC && (
   <div className="kyc-modal">
@@ -183,6 +227,8 @@ const AdminDashboard = () => {
               )}
       
       <div className="kyc-data">
+      <p><strong>Name:</strong> {selectedKYC?.name || "N/A"}</p>
+      <p><strong>Email:</strong> {selectedKYC?.email || "N/A"}</p>
         <p><strong>Address:</strong> {selectedKYC.kycData?.residentialAddress || "N/A"}</p>
         <p><strong>Date of Birth:</strong> {selectedKYC.kycData?.dateOfBirth || "N/A"}</p>
         <p><strong>Nationality:</strong> {selectedKYC.kycData?.nationality || "N/A"}</p>
@@ -241,59 +287,76 @@ const AdminDashboard = () => {
 
 
 
-        <section>
-        <h2>Investments</h2>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Amount</th>
-                  <th>Plan</th>
-                  <th>Start Date</th>
-                  <th>Maturity Date</th>
-                  <th>Expected Returns</th>
-                  <th>Status</th>
-                  <th>Payment Method</th>
-                  <th>Receipt</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {investments.map((investment) => (
-                  <tr key={investment._id}>
-                    <td>{investment._id}</td>
-                    <td>{investment.user?.name || "N/A"}</td>
-                    <td>${investment.amount}</td>
-                    <td>{investment.plan}</td>
-                    <td>{new Date(investment.startDate).toLocaleDateString()}</td>
-                    <td>{new Date(investment.maturityDate).toLocaleDateString()}</td>
-                    <td>${investment.expectedReturns}</td>
-                    <td>{investment.status}</td>
-                    <td>{investment.paymentMethod}</td>
-                    <td>
-                      {investment.paymentMethod === "manual" && investment.receipt ? (
-                        <a href={investment.receipt} target="_blank" rel="noopener noreferrer">
-                          View Receipt
-                        </a>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td>
-                      {investment.status === "Pending" && investment.paymentMethod === "manual" && (
-                        <button onClick={() => handleApprovePayment(investment._id)}>Approve</button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </section>
+<section>
+  <h2>Investments</h2>
+  {loading ? (
+    <p>Loading...</p>
+  ) : (
+    <div className="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Plan</th>
+            <th>Start Date</th>
+            <th>Maturity Date</th>
+            <th>Expected Returns</th>
+            <th>Status</th>
+            <th>Payment Method</th>
+            <th>Receipt</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {investments.map((investment) => (
+            <tr key={investment._id}>
+              <td>{investment._id}</td>
+              <td>{investment.user?.name || "N/A"}</td>
+              <td>${investment.amount}</td>
+              <td>{investment.plan}</td>
+              <td>{new Date(investment.startDate).toLocaleDateString()}</td>
+              <td>{new Date(investment.maturityDate).toLocaleDateString()}</td>
+              <td>${investment.expectedReturns}</td>
+              <td>{investment.status}</td>
+              <td>{investment.paymentMethod}</td>
+              <td>
+                {investment.paymentMethod === "manual" && investment.receipt ? (
+                  <a
+                    href={investment.receipt.startsWith("http") ? investment.receipt : `http://localhost:5000${investment.receipt}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Receipt
+                  </a>
+                ) : (
+                  "N/A"
+                )}
+              </td>
+              <td>
+  {investment.status === "Pending" && investment.paymentMethod === "manual" && (
+    <>
+      <button onClick={() => handleApprovePayment(investment._id)}>Approve</button>
+      <button onClick={() => handleDeleteInvestment(investment._id)} className="delete-btn">Delete</button>
+    </>
+  )}
+</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+       {/* Pagination Controls */}
+       {totalPages > 1 && (
+                <div className="pagination">
+                  <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                  <span>Page {currentPage} of {totalPages}</span>
+                  <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                </div>
+              )}
+    </div>
+  )}
+</section>
       </div>
     </div>
   );

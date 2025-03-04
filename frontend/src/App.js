@@ -32,6 +32,7 @@ import AddInventory from "./components/AddInventory"; // New import for AddInven
 import EnergyInventoryList from './components/EnergyInventoryList';
 import CreateStaffReport from "./components/CreateStaffReport"; // Import CreateStaffReport component
 import StaffReportList from "./components/StaffReportList"; // Import StaffReportList componen
+import PaymentSuccess from "./components/PaymentSuccess"; // Import the success page
 // Import RealtorList component
 import RealtorList from "./components/RealtorList"; 
 import DigitalMarketingTable from './components/DigitalMarketingTable'; // Import DigitalMarketingTable
@@ -93,6 +94,7 @@ const App = () => {
          <Route path="/digital-marketing-registrations" element={<DigitalMarketingTable />} /> {/* New route for viewing all digital marketing registrations */}
          <Route path="/dashboard/:userId" element={<DashboardPage />} />
          <Route path="/admin/dashboard" element={<AdminDashboard />} /> {/* Admin Dashboard Route */}
+         <Route path="/payment-success" element={<PaymentSuccess />} />
       </Routes>
     </Router>
   );

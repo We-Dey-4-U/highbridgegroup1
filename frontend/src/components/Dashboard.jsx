@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Footer from "../components/Footer"; // ✅ Import Footer
+import FlipvestFooter from "../components/FlipvestFooter"; // ✅ Import Footer
 import "./Dashboard.css"; // ✅ Import Styles
 import KYCForm from "../components/KYCForm"; // ✅ Import KYCForm component
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid  } from "recharts"; // ✅ Import Recharts
@@ -58,26 +58,27 @@ useEffect(() => {
         response.data.kycVerified = true;
       }
 
-      // Merge investments with existing user investments
+      // ✅ Ensure investments are updated correctly
       setUser((prevUser) => {
         const newInvestments = response.data.investments || [];
-        
-        // Remove duplicates by checking if investment already exists
-        const mergedInvestments = newInvestments.filter(
-          (newInv) => !prevUser?.investments?.some((oldInv) => oldInv._id === newInv._id)
-        );
 
-        console.log("📊 Merged Investments Data:", mergedInvestments);
+        // Ensure correct payment method
+        const updatedInvestments = newInvestments.map((inv) => ({
+          ...inv,
+          paymentMethod: inv.paymentMethod || "manual", // ✅ Ensure manual is set if missing
+        }));
+
+        console.log("📊 Updated Investments:", updatedInvestments);
 
         return {
           ...response.data,
-          investments: [...(prevUser?.investments || []), ...mergedInvestments],
+          investments: updatedInvestments, // ✅ Update investments in state
         };
       });
 
       setReferralCode(response.data.referralCode || "N/A");
 
-      // ✅ Process Investments for Chart (Ensuring Correct Payment Method)
+      // ✅ Process Investments for Chart
       const formattedData = response.data.investments
         ? response.data.investments.map((investment) => {
             const plan = investmentPlans.find((p) => p.value === investment.plan);
@@ -88,7 +89,7 @@ useEffect(() => {
               name: investment.plan,
               amount: investment.amount,
               expectedReturns,
-              paymentMethod: investment.paymentMethod || "manual", // ✅ Ensure correct payment method
+              paymentMethod: investment.paymentMethod || "manual", // ✅ Ensure payment method is set
               status: investment.status || "Pending",
             };
           })
@@ -105,55 +106,62 @@ useEffect(() => {
   };
 
   fetchDashboardData();
-}, [navigate]);
+}, [navigate]); // ✅ Dependency array ensures re-fetch on navigation
 
 
 
 
-  useEffect(() => {
-    if (user?.investments) {
-      const countdowns = {};
+ // Function to format countdown time
+// Function to format countdown time
+const formatTime = (ms) => {
+  if (ms <= 0) return "Completed";
+  const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((ms / (1000 * 60)) % 60);
+  const seconds = Math.floor((ms / 1000) % 60);
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+};
 
-      user.investments.forEach((investment) => {
+// Effect to track countdown for active investments
+ // Initialize countdowns when investments load
+ useEffect(() => {
+  if (user?.investments) {
+    const countdowns = {};
+    user.investments.forEach((investment) => {
+      if (investment.status === "active") {
+        const maturityDate = new Date(investment.maturityDate).getTime();
+        const now = Date.now();
+        countdowns[investment.id] = Math.max(0, maturityDate - now);
+      }
+    });
+    setInvestmentCountdowns(countdowns);
+  }
+}, [user?.investments]);
+
+// Update countdown every second
+useEffect(() => {
+  const interval = setInterval(() => {
+    setInvestmentCountdowns((prevCountdowns) => {
+      const updatedCountdowns = { ...prevCountdowns };
+
+      user?.investments?.forEach((investment) => {
         if (investment.status === "active") {
-          const endTime = new Date(investment.maturityDate).getTime();
-          countdowns[investment.plan] = endTime;
+          const remainingTime = new Date(investment.maturityDate).getTime() - Date.now();
+          updatedCountdowns[investment.id] = Math.max(0, remainingTime);
         }
       });
 
-      setInvestmentCountdowns(countdowns);
-    }
-  }, [user]);
+      return updatedCountdowns;
+    });
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [user?.investments]);
 
 
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setInvestmentCountdowns((prevCountdowns) => {
-        const updatedCountdowns = {};
-        Object.keys(prevCountdowns).forEach((plan) => {
-          const timeLeft = prevCountdowns[plan] - new Date().getTime();
-          updatedCountdowns[plan] = timeLeft > 0 ? timeLeft : 0;
-        });
-        return updatedCountdowns;
-      });
-    }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
-
-  const formatTime = (ms) => {
-    if (ms <= 0) return "Completed";
-    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((ms / (1000 * 60)) % 60);
-    const seconds = Math.floor((ms / 1000) % 60);
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  };
-
-
-  
 
   const handlePlanChange = (e) => {
     const selected = investmentPlans.find(plan => plan.value === e.target.value);
@@ -196,7 +204,6 @@ useEffect(() => {
 
 
   
-
 const handlePayment = async () => {
   console.log("👤 User Data: ", user);
   console.log("📌 Selected Plan: ", selectedPlan);
@@ -222,7 +229,7 @@ const handlePayment = async () => {
       }
 
       setProcessing(true);
-      setErrorMessage("");
+      setErrorMessage(""); // ✅ Clear any previous errors
 
       const token = localStorage.getItem("token");
       if (!token) {
@@ -244,7 +251,7 @@ const handlePayment = async () => {
               currency: "NGN",
               fullName: user.name || "",
               expectedReturns,
-              paymentMethod, // ✅ Ensure paymentMethod is included
+              paymentMethod,
           };
 
           console.log("🚀 Sending Payment Data:", paymentData);
@@ -258,6 +265,12 @@ const handlePayment = async () => {
 
           if (response.data?.redirectUrl) {
               console.log("🔗 Redirecting to:", response.data.redirectUrl);
+              setErrorMessage(""); // ✅ Clear error if payment initiation is successful
+
+              // Store success flag in localStorage
+              localStorage.setItem("paymentSuccess", "true");
+
+              // Redirect to payment URL
               window.location.href = response.data.redirectUrl;
           } else {
               setErrorMessage("⚠️ Payment link generation failed. Try again.");
@@ -266,7 +279,7 @@ const handlePayment = async () => {
           const formData = new FormData();
           formData.append("amount", investmentAmount);
           formData.append("plan", selectedPlan);
-          formData.append("paymentMethod", paymentMethod); // ✅ Include payment method
+          formData.append("paymentMethod", paymentMethod);
           formData.append("receipt", paymentReceipt);
 
           const manualResponse = await axios.post(
@@ -282,34 +295,25 @@ const handlePayment = async () => {
 
           console.log("✅ Manual Payment Response:", manualResponse.data);
 
-          if (manualResponse.data && manualResponse.data.success === true) {
-              setSuccessMessage("✅ Manual payment submitted successfully. Fetching updated investments...");
-
-              const updatedResponse = await axios.get("http://localhost:5000/api/dashboard", {
-                  headers: { Authorization: `Bearer ${token}` },
-              });
-
-              console.log("🔄 Updated Investment Data:", updatedResponse.data.investments);
-
-              if (updatedResponse.data.investments) {
-                  const formattedData = updatedResponse.data.investments.map((investment) => {
-                      const plan = investmentPlans.find((p) => p.value === investment.plan);
-                      const percentage = plan ? parseFloat(plan.label.match(/(\d+)%/)[1]) : 0;
-                      const expectedReturns = plan ? (investment.amount * percentage) / 100 : 0;
-
-                      return {
-                          name: investment.plan,
-                          amount: investment.amount,
-                          expectedReturns,
-                          paymentMethod: investment.paymentMethod || "manual", // ✅ Ensure paymentMethod is stored
-                          status: investment.status || "Pending",
-                      };
-                  });
-                  setInvestmentData(formattedData);
-              }
-          } else {
-              setErrorMessage("⚠️ Failed to submit manual payment. Please try again.");
-          }
+          if (
+            manualResponse.data &&
+            (manualResponse.data.message?.includes("Manual payment and investment recorded successfully") ||
+             manualResponse.data.success === true)
+        ) {
+            setErrorMessage(""); // ✅ Clear any existing errors
+            setSuccessMessage("✅ Payment initiation was successful.");
+        
+            // Store success flag in localStorage
+            localStorage.setItem("paymentSuccess", "true");
+        
+            // Redirect to success page after 3 seconds
+            setTimeout(() => {
+                navigate("/payment-success");
+            }, 3000);
+        } else {
+            console.log("❌ Manual Payment Failed Response:", manualResponse.data); // Debugging line
+            setErrorMessage("⚠️ Failed to submit manual payment. Please try again.");
+        }
       }
   } catch (error) {
       console.error("🛑 Error processing payment:", error.response?.data || error.message);
@@ -445,14 +449,15 @@ const handlePayment = async () => {
         <p><strong>Account Name:</strong> HIGHBRIDGE FLIPVEST LIMITED</p>
         <p><strong>Account Number:</strong> 1229557601</p>
         <p>Please make the payment and upload the receipt to proceed.</p>
+        <p style={{ color: "red", fontWeight: "bold" }}>
+          Warning: You must complete the payment within 24 hours, or the initiated payment will be deleted.
+        </p>
       </div>
     </div>
   </div>
 )}
 
-      {/* ✅ User Investments */}
      {/* ✅ User Investments */}
-{/* ✅ User Investments */}
 <h2>Your Investments</h2>
 <div className="investments-container">
   {user?.investments?.length ? (
@@ -467,13 +472,13 @@ const handlePayment = async () => {
             <th>Maturity Date</th>
             <th>Countdown</th>
             <th>Expected Returns</th>
-            <th>Payment Method</th> {/* ✅ NEW COLUMN */}
-            <th>Receipt</th> {/* ✅ NEW COLUMN (for manual payments) */}
+            <th>Payment Method</th>
+            <th>Receipt</th>
           </tr>
         </thead>
         <tbody>
           {user.investments.map((investment, index) => (
-            <tr key={index}>
+            <tr key={index} className="investment-row">
               <td>{investment.plan}</td>
               <td>
                 {new Intl.NumberFormat("en-NG", {
@@ -486,9 +491,7 @@ const handlePayment = async () => {
               <td>{new Date(investment.maturityDate).toDateString()}</td>
               <td>
                 {investment.status === "active"
-                  ? new Date(investment.maturityDate) > new Date()
-                    ? formatTime(new Date(investment.maturityDate) - new Date())
-                    : "N/A"
+                  ? formatTime(investmentCountdowns[investment.id] || 0)
                   : "N/A"}
               </td>
               <td>
@@ -497,14 +500,14 @@ const handlePayment = async () => {
                   currency: "NGN",
                 }).format(investment.expectedReturns)}
               </td>
-              <td>{investment.paymentMethod === "manual" ? "Manual Payment" : "Flutterwave"}</td> {/* ✅ Show payment method */}
+              <td>{investment.paymentMethod === "manual" ? "Manual Payment" : "Flutterwave"}</td>
               <td>
                 {investment.paymentMethod === "manual" && investment.receiptUrl ? (
-                  <a href={investment.receiptUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={investment.receiptUrl} target="_blank" rel="noopener noreferrer" className="receipt-link">
                     View Receipt
                   </a>
                 ) : "N/A"}
-              </td> {/* ✅ Show receipt link if available */}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -514,6 +517,10 @@ const handlePayment = async () => {
     <p style={{ color: "white" }}>No active investments</p>
   )}
 </div>
+
+
+
+
 
 
 
@@ -565,7 +572,7 @@ const handlePayment = async () => {
 
       {paymentLink && <a href={paymentLink} target="_blank" rel="noopener noreferrer">Proceed to Payment</a>}
 
-      <Footer />
+      <FlipvestFooter />
     </div>
   );
 };

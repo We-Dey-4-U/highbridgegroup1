@@ -121,6 +121,8 @@ const KYCForm = ({ onKycUpdate }) => {
         borderRadius: "8px",
         background: "#000",
         color: "#fff",
+        maxHeight: "80vh", // Limit height
+        overflowY: "auto", // Enable scrolling
       }}
     >
       <h2 style={{ textAlign: "center" }}>IoT-Enabled KYC Form</h2>
