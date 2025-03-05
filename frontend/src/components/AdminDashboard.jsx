@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/admin/users", {
+      const response = await axios.get("https://highbridge-api-12.onrender.com/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
   const fetchKYCRequests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/admin/kyc-requests", {
+      const response = await axios.get("https://highbridge-api-12.onrender.com/api/admin/kyc-requests", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
   const fetchInvestments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/admin/investments", {
+      const response = await axios.get("https://highbridge-api-12.onrender.com/api/admin/investments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInvestments(response.data || []);
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
   const handleApproveKYC = async (userId, status) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.patch(`http://localhost:5000/api/admin/kyc/${userId}`, 
+      await axios.patch(`https://highbridge-api-12.onrender.com/api/admin/kyc/${userId}`, 
         { status }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -86,7 +86,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:5000/api/admin/approve-payment/${investmentId}`,
+        `https://highbridge-api-12.onrender.com/api/admin/approve-payment/${investmentId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
   
     try {
       const token = localStorage.getItem("token"); // Add this line to retrieve token
-      const response = await fetch(`http://localhost:5000/api/admin/investments/${investmentId}`, {
+      const response = await fetch(`https://highbridge-api-12.onrender.com/api/admin/investments/${investmentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`, // Use the retrieved token
@@ -218,7 +218,7 @@ const AdminDashboard = () => {
       {selectedKYC?.kycData?.passportImage && (
                 <div className="passport-box" style={{ textAlign: "center", marginBottom: "10px" }}>
                   <img
-                    src={`http://localhost:5000/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
+                    src={`https://highbridge-api-12.onrender.com/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
                     alt="Passport"
                     style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "5px", border: "1px solid #ccc" }}
                     onError={(e) => console.error("Passport image failed to load:", e.target.src)}
@@ -240,7 +240,7 @@ const AdminDashboard = () => {
 
         {selectedKYC?.kycData?.idDocumentImage && (
   <img
-  src={`http://localhost:5000/${selectedKYC.kycData.idDocumentImage.replace(/\\/g, "/")}`}
+  src={`https://highbridge-api-12.onrender.com/${selectedKYC.kycData.idDocumentImage.replace(/\\/g, "/")}`}
   alt="Uploaded ID Document"
   style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
   onError={(e) => console.error("Image failed to load:", e.target.src)}
@@ -324,7 +324,7 @@ const AdminDashboard = () => {
               <td>
                 {investment.paymentMethod === "manual" && investment.receipt ? (
                   <a
-                    href={investment.receipt.startsWith("http") ? investment.receipt : `http://localhost:5000${investment.receipt}`}
+                    href={investment.receipt.startsWith("http") ? investment.receipt : `https://highbridge-api-12.onrender.com${investment.receipt}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

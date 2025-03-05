@@ -28,7 +28,7 @@
     padding: 12px;
     text-align: center;
     border: 1px solid #ddd;
-    color: #fff;
+    color: #053f24;
   }
   
   .staff-report-table th {
@@ -95,4 +95,32 @@
     height: auto; /* Maintain aspect ratio */
     display: block; /* Removes any extra space below the image */
     margin: 0 auto 20px; /* Centers the image and adds spacing below */
+  }
+
+
+
+  .staff-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white; /* White table background */
+    color: black; /* Black text */
+  }
+  
+  .staff-report-table th, .staff-report-table td {
+    border: 1px solid #ddd; /* Optional: Adds border for clarity */
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .staff-report-table th {
+    background-color: #f2f2f2; /* Light gray header background */
+    color: black; /* Ensures header text is black */
+  }
+  
+  .staff-report-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray alternating row background */
+  }
+  
+  .staff-report-table tr:hover {
+    background-color: #e6e6e6; /* Slight highlight on hover */
   }

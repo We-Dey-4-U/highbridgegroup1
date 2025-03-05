@@ -10,6 +10,7 @@ import ScrollElement from "../components/ScrollElement";
 import CounterGrid from "../components/CounterGrid";
 import FAQ from "../components/FAQ";
 import ExecutiveTeam from "../components/ExecutiveTeam"; // Import the ExecutiveTeam component
+import LatestNews from "../components/LatestNews"; // Import LatestNews Component
 
 const Home = () => {
   return (
@@ -31,7 +32,7 @@ const Home = () => {
         <ExecutiveTeam /> {/* Add ExecutiveTeam component here */}
       </ScrollElement>
       <ScrollElement>
-        <FAQ />
+      <LatestNews />
       </ScrollElement>
       <Footer />
     </>

@@ -58,7 +58,7 @@ const CreateStaffReport = () => {
     console.log('Submitting staff report:', staffReport);
 
     try {
-      const response = await axios.post('https://highbridge-api-3.onrender.com/api/staff-reports', staffReport);
+      const response = await axios.post('https://highbridge-api-12.onrender.com/api/staff-reports/staff-reports', staffReport);
       console.log('Server response:', response.data);
 
       alert(response.data.message || 'Staff report submitted successfully!');

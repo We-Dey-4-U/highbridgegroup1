@@ -48,7 +48,7 @@ useEffect(() => {
       }
 
       console.log("🟢 Fetching dashboard data...");
-      const response = await axios.get("http://localhost:5000/api/dashboard", {
+      const response = await axios.get("https://highbridge-api-12.onrender.com/api/dashboard", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -256,7 +256,7 @@ const handlePayment = async () => {
 
           console.log("🚀 Sending Payment Data:", paymentData);
           const response = await axios.post(
-              "http://localhost:5000/api/payments/initiate-flutterwave-payment",
+              "https://highbridge-api-12.onrender.com/api/payments/initiate-flutterwave-payment",
               paymentData,
               { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -283,7 +283,7 @@ const handlePayment = async () => {
           formData.append("receipt", paymentReceipt);
 
           const manualResponse = await axios.post(
-              "http://localhost:5000/api/payments/manual-payment",
+              "https://highbridge-api-12.onrender.com/api/payments/manual-payment",
               formData,
               {
                   headers: {

@@ -9,7 +9,7 @@ const ReportList = () => {
 
   useEffect(() => {
     axios
-      .get("https://highbridge-api-2.onrender.com/api/reports")
+      .get("https://highbridge-api-12.onrender.com/api/reports")
       .then((response) => {
         setReports(response.data);
       })
