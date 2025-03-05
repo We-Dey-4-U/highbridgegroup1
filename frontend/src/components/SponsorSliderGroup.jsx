@@ -14,7 +14,7 @@ const SponsorSliderGroup = () => {
     <section className="sponsor-slider">
       <div className="sponsor-slider-wrapper">
         <div className="sponsor-label">
-          <h3>Projects</h3>
+          <h3>Brands</h3>
         </div>
         <div className="sponsor-slider-container">
           {sponsors.map((logo, index) => (

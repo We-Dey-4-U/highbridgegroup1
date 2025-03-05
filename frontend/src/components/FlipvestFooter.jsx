@@ -15,13 +15,7 @@ const FlipvestFooter = () => {
             className="footer-logo"
           />
           <p>
-          Highbridge Flipvest is a premier agricultural investment platform committed to 
-          empowering individuals and businesses with profitable, sustainable, 
-          and technology-driven farming opportunities. By leveraging innovation and strategic 
-          partnerships, we provide seamless access to high-yield agricultural ventures, fostering 
-          economic growth and long-term wealth creation. At Highbridge Flipvest, we bridge the gap 
-          between investors and the agricultural sector, ensuring transparency, efficiency, and maximum 
-          returns on investment.
+          HighBridge FlipVest is an investment brand under the HighBridge Group umbrella. It specializes in real estate and agricultural investment opportunities, offering unique strategies for property flipping and agricultural investment plans, maximizing returns through careful property management and investment analysis.
           </p>
         </div>
 

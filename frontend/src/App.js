@@ -4,6 +4,7 @@ import ScrollToTop from "./components/ScrollToTop"; // Import ScrollToTop compon
 import Home from "./pages/Home";
 import HighbridgeGroupHome from "./pages/HighbridgeGroupHome";
 import About from "./pages/About"; 
+import AboutUsGroup from "./components/AboutUsGroup"; // Import AboutUsGroup component
 import ServicesPage from "./pages/Services";
 import Contact from "./pages/Contact";
 import HighbridgeHeavenPage from "./pages/HighbridgeHeavenPage";
@@ -40,6 +41,9 @@ import AgrovestLandingPage from "./pages/AgrovestLandingPage"; // Import Agroves
 import AgrovestWebinarPage from "./pages/AgrovestWebinarPage"; // Import AgrovestLandingPage
 import DashboardPage from './components/Dashboard';
 import AdminDashboard from "./components/AdminDashboard"; // Import Admin Dashboard
+// **Import New Components**
+import AgroVest from "./components/AgroVest";
+import Buy2Flip from "./components/Buy2Flip";
 
 
 
@@ -76,6 +80,7 @@ const App = () => {
         <Route path="/hilcity" element={<HighbridgeHillcity />} />
         <Route path="/properties" element={<PropertiesPage />} />
         <Route path="/all-teams" element={<AllTeamsPage />} /> {/* New route for all teams */}
+        <Route path="/about-us-group" element={<AboutUsGroup />} /> {/* New AboutUsGroup Route */}
          {/* Report Management Routes */}
          <Route path="/create-report" element={<CreateReport />} /> {/* Route for creating reports */}
         <Route path="/reports" element={<ReportList />} /> {/* Route for viewing all reports */}
@@ -86,6 +91,10 @@ const App = () => {
         {/* Staff Report Management Routes */}
         <Route path="/create-staff-report" element={<CreateStaffReport />} /> {/* Route for creating staff reports */}
         <Route path="/staff-reports" element={<StaffReportList />} /> {/* Route for viewing all staff reports */}
+
+
+        <Route path="/agrovest" element={<AgroVest />} />
+        <Route path="/buy2flip" element={<Buy2Flip />} />
 
 
         {/* New Realtor List Route */}

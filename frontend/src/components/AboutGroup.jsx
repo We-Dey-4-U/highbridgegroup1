@@ -1,5 +1,6 @@
 import React from "react";
-import "./About.css"; // Import the CSS file for styl
+import "./AboutGroup.css"; // Import the CSS file for styl
+import NavbarGroup from "./NavbarGroup"; // Adjust the path if needed
 
 const AboutGroup = () => {
   return (
@@ -18,7 +19,7 @@ const AboutGroup = () => {
 
 
           </p>
-          <a href="/about" className="read-more-button">
+          <a href="/about-us-group" className="read-more-button">
             Read More
           </a>
         </div>

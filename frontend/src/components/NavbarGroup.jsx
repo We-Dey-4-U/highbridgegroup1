@@ -30,7 +30,7 @@ const NavbarGroup = () => {
         {/* Nav Links */}
         <ul className={`nav-links ${isMobileMenuOpen ? "active" : ""}`}>
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About Us</a></li>
+          <li><a href="/about-us-group">About Us</a></li>
           <li><a href="/events">Events</a></li>
           <li><a href="/contact">Contact</a></li>
 

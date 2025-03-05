@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import FAQ from "../components/FAQ";
-import SponsorSlider from "../components/SponsorSlider";
+import SponsorSliderGroup from "../components/SponsorSliderGroup";
 import { FaCommentDots } from "react-icons/fa"; // Import an icon from react-icons
 import { motion } from "framer-motion";
 
@@ -182,12 +182,12 @@ const AgrovestLandingPage = () => {
   <Link to="/" className="transparent-btn1">
     Home
   </Link>
-  <button className="transparent-btn1" onClick={scrollToAbout}>
-    About Agrovest
-  </button>
-  <button className="transparent-btn1" onClick={scrollToGallery}>
-    Gallery
-  </button>
+  <Link to="/agrovest" className="transparent-btn1">
+    Agrovest
+  </Link>
+  <Link to="/buy2flip" className="transparent-btn1">
+    Buy2Flip
+  </Link>
 </div>
 
           {/* Transparent registration button centered */}
@@ -208,35 +208,69 @@ const AgrovestLandingPage = () => {
       {/* Mobile Navigation */}
       <div className={`mobile-nav ${isMobileNavOpen ? "open" : ""}`}>
         <Link to="/" onClick={toggleMobileNav}>Home</Link>
-        <button onClick={() => { scrollToAbout(); toggleMobileNav(); }}>About Us</button>
-        <button onClick={() => { scrollToGallery(); toggleMobileNav(); }}>Gallery</button>
+        <Link to="/agroves" onClick={toggleMobileNav}>Agrovest</Link>
+        <Link to="/buy2flip" onClick={toggleMobileNav}>Buy2Flip</Link>
       </div>
 
-      <SponsorSlider />
+      <SponsorSliderGroup />
 
       {/* About Section */}
       <section ref={aboutRef} className="about">
         <div className="about-container">
-          <h1 className="about-heading">Maximize Your Earnings with Agrovest</h1>
+          <h1 className="about-heading">Maximize Your Earnings with Highbridge Flipvest</h1>
           <div className="about-content">
 
 
   <div className="about-text">
   <p>
-  Join us for an exclusive <strong style={{ color: '#ff6347' }}>free</strong> <strong style={{ color: '#ff6347' }}>webinar</strong> on <strong>Highbridge Agrovest – Bokku Food Vol. 1</strong>, where we’ll share how you can invest in agriculture and earn impressive returns. Discover how our sustainable farming ventures in ginger, poultry, snails, and livestock can help grow your wealth.
+  <strong style={{ color: '#000' }}>About HighBridge FlipVest</strong> <br />  
+  HighBridge FlipVest is an investment brand under the HighBridge Group umbrella. It specializes in real estate and agricultural investment opportunities, offering unique strategies for property flipping and agricultural investment plans, maximizing returns through careful property management and investment analysis.
 </p>
-<p>
-  Don’t miss out on this opportunity to learn from industry experts and explore a secure, profitable investment model backed by <strong>Highbridge Farmcity Cooperative</strong>.
-</p>
-<p>
+  <p>
+  As part of its commitment to wealth creation, HighBridge FlipVest offers two key investment solutions—profitable agricultural ventures and strategic buy2flip models—ensuring attractive returns for investors.
+  </p>
+  <p>
+    <strong style={{ color: '#ff6347' }}>HighBridge AgroVest</strong> — An investment initiative under HighBridge FlipVest, focused on agro-allied industries, covering both crop and livestock ventures.
+  </p>
+  <p>
+  <Link to="/Agrovest" style={{ textDecoration: 'none' }}>
   <button
     className="transparent"
-    onClick={scrollToRegistration}
-    style={{ backgroundColor: 'green', color: '#fff' }}
+    style={{
+      backgroundColor: 'green',
+      color: '#fff',
+      border: 'none',
+      padding: '10px 20px',
+      cursor: 'pointer',
+    }}
   >
-    Register Now
-  </button> and take the first step toward a prosperous future!
-</p>
+    Learn More About AgroVest
+  </button>
+</Link>
+  </p>
+
+
+
+
+  <p>
+    <strong style={{ color: '#ff6347' }}>HighBridge Buy2flip</strong> — Its A short-term investment scheme focusing on purchasing assets to later sell for profit, ensuring fast and efficient returns.
+  </p>
+  <p>
+  <Link to="/buy2flip" style={{ textDecoration: 'none' }}>
+  <button
+    className="transparent"
+    style={{
+      backgroundColor: 'green',
+      color: '#fff',
+      border: 'none',
+      padding: '10px 20px',
+      cursor: 'pointer',
+    }}
+  >
+    Learn More About Buy2Flip
+  </button>
+</Link>
+  </p>
 
 </div>
 
