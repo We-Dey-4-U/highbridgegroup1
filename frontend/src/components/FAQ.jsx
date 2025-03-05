@@ -41,8 +41,8 @@ const FAQ = () => {
 };
 
 const faqData = [
-  { question: "What is AGROVEST?", answer: "AGROVEST is an agricultural investment offering individuals and organizations the opportunity to invest in sustainable agricultural projects in Nigeria. It is a partnership between Highbridge FLIPVEST Ltd and the Ministry of Agriculture." },
   { question: "What is FLIPVEST Ltd?", answer: "FLIPVEST LTD is a subsidiary of HIGHBRIDGE GROUP, while AGROVEST represents its agricultural investment product." },
+  { question: "What is AGROVEST?", answer: "AGROVEST is an agricultural investment offering individuals and organizations the opportunity to invest in sustainable agricultural projects in Nigeria. It is a partnership between Highbridge FLIPVEST Ltd and the Ministry of Agriculture." },
   { question: "Which estate is involved in AGROVEST?", answer: "Farmcity Cooperatives Estate, Ishiwo." },
   { 
     question: "What are the investment options and their respective ROIs?", 

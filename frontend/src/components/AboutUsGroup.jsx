@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./AboutUsGroup.css"; 
 import { AiOutlineStar } from "react-icons/ai"; 
 import awardImg from "../assets/award.jpg";
-import NavbarGroup from "./NavbarGroup"; // Import NavbarGroup
-import FooterGroup from "./FooterGroup"; // Import FooterGroup
-import SponsorSliderGroup from "./SponsorSliderGroup"; // Import SponsorSliderGroup
+import NavbarGroup from "./NavbarGroup";
+import FooterGroup from "./FooterGroup";
+import SponsorSliderGroup from "./SponsorSliderGroup";
 
 const aboutUsData = [
   {
@@ -65,41 +65,15 @@ const aboutUsData = [
 ];
 
 const AboutUsGroup = () => {
-  const [selectedTab, setSelectedTab] = useState("All");
-
-  const filteredContent =
-    selectedTab === "All"
-      ? aboutUsData
-      : aboutUsData.filter((section) => section.title === selectedTab);
-
   return (
     <>
-      {/* Navbar at the top */}
       <NavbarGroup />
 
       <div className="about-container1">
         <h2 className="about-title">About Us - Highbridge Group</h2>
 
-        <div className="about-tabs1">
-          <button
-            className={selectedTab === "All" ? "active" : ""}
-            onClick={() => setSelectedTab("All")}
-          >
-            All
-          </button>
-          {aboutUsData.map(({ title, id }) => (
-            <button
-              key={id}
-              className={selectedTab === title ? "active" : ""}
-              onClick={() => setSelectedTab(title)}
-            >
-              {title}
-            </button>
-          ))}
-        </div>
-
         <div className="about-sections1">
-          {filteredContent.map(({ id, title, image, content, videoUrl, isAward }) => (
+          {aboutUsData.map(({ id, title, image, content, videoUrl, isAward }) => (
             <div key={id} className="about-section1">
               <h3 className="about-heading1">{title}</h3>
 
@@ -121,24 +95,11 @@ const AboutUsGroup = () => {
 
               {Array.isArray(content) ? (
                 <ul className="about-list">
-                  {content.map((item, index) => {
-                    if (isAward) {
-                      return (
-                        <li key={index} className="about-text">
-                          <AiOutlineStar className="award-star" /> {item}
-                        </li>
-                      );
-                    } else if (item.includes(":")) {
-                      const words = item.split(":");
-                      return (
-                        <li key={index} className="about-text">
-                          <span className="highlight1">{words[0]}:</span> {words.slice(1).join(":")}
-                        </li>
-                      );
-                    } else {
-                      return <li key={index} className="about-text">{item}</li>;
-                    }
-                  })}
+                  {content.map((item, index) => (
+                    <li key={index} className="about-text">
+                      {isAward ? <AiOutlineStar className="award-star" /> : null} {item}
+                    </li>
+                  ))}
                 </ul>
               ) : (
                 <p className="about-text1">{content}</p>
@@ -147,10 +108,8 @@ const AboutUsGroup = () => {
           ))}
         </div>
       </div>
-       {/* Sponsor Slider before Footer */}
-       <SponsorSliderGroup />
 
-      {/* Footer at the bottom */}
+      <SponsorSliderGroup />
       <FooterGroup />
     </>
   );
