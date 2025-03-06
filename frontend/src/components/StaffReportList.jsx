@@ -18,7 +18,7 @@ const StaffReportList = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('https://highbridge-api-12.onrender.com/api/staff-reports/staff-reports')
+    axios.get('http://localhost:5000/api/staff-reports/staff-reports')
       .then((response) => {
         setStaffReports(response.data);
 
@@ -57,7 +57,7 @@ const StaffReportList = () => {
         return;
       }
 
-      await axios.put(`https://highbridge-api-12.onrender.com/api/staff-reports/staff-reports/${reportId}`, {
+      await axios.put(`http://localhost:5000/api/staff-reports/staff-reports/${reportId}`, {
         timeOut: timeOutValues[reportId],
       });
 
@@ -91,6 +91,7 @@ const StaffReportList = () => {
         <thead>
           <tr>
             <th>Serial No (SN)</th>
+            <th>Staff Image</th> {/* Added this column */}
             <th>Staff Name</th>
             <th>Date</th>
             <th>Branch</th>
@@ -103,31 +104,40 @@ const StaffReportList = () => {
           </tr>
         </thead>
         <tbody>
-          {currentReports.map((report) => (
-            <tr key={report._id}>
-              <td>{report.sn}</td>
-              <td>{report.name}</td>
-              <td>{new Date(report.date).toLocaleDateString()}</td>
-              <td>{report.branch}</td>
-              <td>{report.email}</td>
-              <td>{report.mobileNumber}</td>
-              <td>{report.privateNote}</td>
-              <td>{formatTime(report.timeIn)}</td>
-              <td>
-                <input
-                  type="time"
-                  value={timeOutValues[report._id] || ''}
-                  onChange={(e) => handleTimeOutChange(report._id, e.target.value)}
-                />
-              </td>
-              <td>
-                <button onClick={() => handleTimeOutSubmit(report._id)}>
-                  Save TimeOut
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {currentReports.map((report) => (
+    <tr key={report._id}>
+      <td>{report.sn}</td>
+      <td>
+        {report.image ? (
+          <img
+            src={`http://localhost:5000/${report.image}`}
+            alt="Staff"
+            style={{ width: '100px', height: '100px', borderRadius: '70%' }}
+          />
+        ) : (
+          <span>No Image</span>
+        )}
+      </td>
+      <td>{report.name}</td>
+      <td>{new Date(report.date).toLocaleDateString('en-NG', { timeZone: 'Africa/Lagos' })}</td>
+      <td>{report.branch}</td>
+      <td>{report.email}</td>
+      <td>{report.mobileNumber}</td>
+      <td>{report.privateNote}</td>
+      <td>{formatTime(report.timeIn)}</td>
+      <td>
+        <input
+          type="time"
+          value={timeOutValues[report._id] || ''}
+          onChange={(e) => handleTimeOutChange(report._id, e.target.value)}
+        />
+      </td>
+      <td>
+        <button onClick={() => handleTimeOutSubmit(report._id)}>Save TimeOut</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
 
       <div className="pagination">
