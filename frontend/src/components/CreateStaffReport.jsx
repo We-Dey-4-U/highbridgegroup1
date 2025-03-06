@@ -112,7 +112,7 @@ const CreateStaffReport = () => {
     formData.append("image", imageFile);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/staff-reports/staff-reports", formData, {
+      const response = await axios.post("https://highbridge-api-13.onrender.com/api/staff-reports/staff-reports", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
