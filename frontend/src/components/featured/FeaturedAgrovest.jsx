@@ -45,7 +45,7 @@ const FeaturedAgrovest = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post("https://highbridge-api-12.onrender.com/api/auth/register", user);
+            const response = await axios.post("http://localhost:5000/api/auth/register", user);
             setSubmissionSuccess(response.data.message);
             setUser({ email: "", phone: "", name: "", password: "", referralCode: "" });
             setIsRegistering(false);

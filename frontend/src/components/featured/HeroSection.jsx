@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "./HeroSection.css";
 
@@ -16,6 +16,7 @@ const HeroSection = () => {
   const [user, setUser] = useState({ name: "", email: "", phone: "", password: "", referralCode: "" });
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [submissionSuccess, setSubmissionSuccess] = useState("");
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const HeroSection = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("https://highbridge-api-12.onrender.com/api/auth/register", user);
+      const response = await axios.post("http://localhost:5000/api/auth/register", user);
       setSubmissionSuccess(response.data.message);
       setUser({ name: "", email: "", phone: "", password: "", referralCode: "" });
       setIsRegistering(false);
@@ -54,14 +55,20 @@ const HeroSection = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("https://highbridge-api-12.onrender.com/api/auth/login", loginData);
-      console.log("Login response:", response.data);
-      setShowModal(false);
+        const response = await axios.post("http://localhost:5000/api/auth/login", loginData);
+        const { token, user } = response.data;
+        if (token && user) {
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate(user.role === "admin" ? "/admin/dashboard" : `/dashboard/${user.id}`, { replace: true });
+        } else {
+            setSubmissionSuccess("Login failed. Invalid credentials.");
+        }
     } catch (error) {
-      setSubmissionSuccess("Login failed. Please check your credentials.");
+        setSubmissionSuccess("Login failed. Please check your credentials.");
     }
     setLoading(false);
-  };
+};
 
   return (
     <div className="hero-section">
