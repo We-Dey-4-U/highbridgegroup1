@@ -6,12 +6,9 @@ import FlipvestFooter from "../components/FlipvestFooter";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import FAQ from "../components/FAQ";
 import SponsorSliderGroup from "../components/SponsorSliderGroup";
 import { FaCommentDots } from "react-icons/fa"; // Import an icon from react-icons
-import { motion } from "framer-motion";
+
 
 const images = [
   "/assets/images/hero/landhero2.png",
@@ -55,7 +52,17 @@ const AgrovestLandingPage = () => {
   return (
     <div className="landing-page">
       {/* Hero Section */}
-      <div className="hero-section">
+ <div className="hero-section">
+ <img 
+  src="/assets/images/logo/flipvestlogo.png" 
+  alt="FlipVest Logo" 
+  className="hero-logo" 
+/>
+
+  <div
+    className="hero-background"
+    style={{ backgroundImage: `url(${images[currentImage]})` }}
+  />
   <div
     className="hero-background"
     style={{ backgroundImage: `url(${images[currentImage]})` }}
@@ -80,6 +87,10 @@ const AgrovestLandingPage = () => {
      </div>
   </div>
  </div>
+
+
+
+
 
       {/* Hamburger Menu */}
       <div className="hamburger-menu" onClick={toggleMobileNav}>

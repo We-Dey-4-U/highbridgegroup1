@@ -119,6 +119,14 @@
   font-weight: 400;
 }
 
+
+.hero-subtext {
+  color: white; 
+  font-weight: 700; /* Makes the text thick/bold */
+  font-size: 1.2rem; /* Adjust size as needed */
+  text-align: center;
+}
+
 /* Gradient Highlights */
 .highlight {
   background: linear-gradient(90deg, #ff8c00, #ff4081);

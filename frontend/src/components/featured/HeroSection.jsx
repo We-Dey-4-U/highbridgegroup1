@@ -70,11 +70,7 @@ const HeroSection = () => {
         <h1 style={{ color: "#fff" }}>
           💰 Secure Your Future: Profitable Agricultural Investments in Nigeria! 🌾📈
         </h1>
-        <div className="hero-links">
-          <Link to="/" className="transparent-btn1">Home</Link>
-          <Link to="/agrovest" className="transparent-btn1">Agrovest</Link>
-          <Link to="/buy2flip" className="transparent-btn1">Buy2Flip</Link>
-        </div>
+        
         <div className="center-button-container">
           <button className="transparent-btn" onClick={toggleModal}>Register Now</button>
         </div>

@@ -669,3 +669,21 @@ html {
 
 
 
+.hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.hero-logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px; /* Adjust as needed */
+  height: auto;
+  z-index: 2; /* Ensures it stays above the background */
+}
+
+
+

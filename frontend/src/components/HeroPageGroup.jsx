@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { animated as a } from "@react-spring/web"; // Import animated as 'a'
+import { Link } from "react-router-dom";
 import "./HeroPage.css";
 
 const HeroPageGroup = () => {
@@ -17,27 +17,33 @@ const HeroPageGroup = () => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 4000); // Change image every 4 seconds
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, []);
 
   return (
-    <section
-      className="hero"
-      style={{
-        backgroundImage: `url(${images[currentImageIndex]})`,
-      }}
-    >
-      <a.div className="hero-content"> {/* Animated div */}
-        <h1 className="hero-title">
-          <span className="green-text">Building Wealth</span>{" "}
-          <span className="highlight">Empowering Futures</span>
+    <div className="hero-section">
+      {/* Logo positioned to the left */}
+      <img 
+        src="/assets/images/logo/group.png" 
+        alt="FlipVest Logo" 
+        className="hero-logo" 
+      />
+
+      {/* Hero background */}
+      <div
+        className="hero-background"
+        style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
+      />
+
+      {/* Hero content */}
+      <div className="hero-content">
+        <h1 style={{ color: "#fff" }}>
+          💰 Building Wealth, Empowering Future: Your Path to Financial Freedom! 🌾📈
         </h1>
-        <p className="hero-subtext">
-        Innovative, Sustainable <span className="highlight-alt">and High-Value Opportunities Across Real Estate,</span> 
-          <span className="highlight">Energy, Agriculture </span>  Energy, Agriculture
-          <span className="highlight-alt"> , and Investments</span>.
+        <p style={{ color: "white", fontWeight: "700", fontSize: "1.2rem", textAlign: "center" }}>
+        Innovative, Sustainable and High-Value Opportunities Across Real Estate,Energy, Agriculture Energy, Agriculture , and Investments.
         </p>
-      </a.div>
-    </section>
+      </div>
+    </div>
   );
 };
 

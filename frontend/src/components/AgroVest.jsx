@@ -1,15 +1,15 @@
 import React from "react";
 import "./AgroVest.css"; // Import the CSS file for styling
-import NavbarGroup from "./NavbarGroup"; // Import Navbar
+import AgrovestNavbar from "./AgrovestNavbar"; // Import Navbar
 import FeaturedAgrovest from "./featured/FeaturedAgrovest"; // Import FeaturedGroup
 import SponsorSliderGroup from "./SponsorSliderGroup"; // Import Sponsor Slider
-import FooterGroup from "./FooterGroup"; // Import Footer
+import AgrovestFooter from "./AgovestFooter";
 
 const AgroVest = () => {
   return (
     <>
       {/* Navbar at the top */}
-      <NavbarGroup />
+      <AgrovestNavbar />
       
       {/* Featured Group Section */}
       <FeaturedAgrovest />
@@ -20,7 +20,7 @@ const AgroVest = () => {
       <SponsorSliderGroup />
 
       {/* Footer at the bottom */}
-      <FooterGroup />
+      <AgrovestFooter />
     </>
   );
 };
