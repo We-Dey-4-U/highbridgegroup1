@@ -34,6 +34,7 @@ const KYCForm = ({ onKycUpdate }) => {
 
   const [idFile, setIdFile] = useState(null);
   const [passportFile, setPassportFile] = useState(null);
+  const [signatureFile, setSignatureFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false); // New state
 
@@ -57,11 +58,9 @@ const KYCForm = ({ onKycUpdate }) => {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    if (name === "idDocumentImage") {
-      setIdFile(files[0]);
-    } else if (name === "passportImage") {
-      setPassportFile(files[0]);
-    }
+    if (name === "idDocumentImage") setIdFile(files[0]);
+    else if (name === "passportImage") setPassportFile(files[0]);
+    else if (name === "signatureImage") setSignatureFile(files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -88,11 +87,12 @@ const KYCForm = ({ onKycUpdate }) => {
     if (passportFile) {
       formData.append("passportImage", passportFile);
     }
+    if (signatureFile) formData.append("signatureImage", signatureFile);
 
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "https://highbridge-api-15.onrender.com/api/auth/update-kyc",
+        "http://localhost:5000/api/auth/update-kyc",
         formData,
         {
           headers: {
@@ -125,7 +125,7 @@ const KYCForm = ({ onKycUpdate }) => {
         overflowY: "auto",
       }}
     >
-      <h2 style={{ textAlign: "center" }}>IoT-Enabled KYC Form</h2>
+      <h2 style={{ textAlign: "center" }}>KYC Subscription Form</h2>
 
       <h3 style={{ color: "white" }}>Personal Information</h3>
       {["residentialAddress", "dateOfBirth", "nationality", "maritalStatus", "occupation", "placeOfWork", "workAddress"].map((key) => (
@@ -177,6 +177,11 @@ const KYCForm = ({ onKycUpdate }) => {
       <div style={{ marginBottom: "15px" }}>
         <label>Upload Passport Image</label>
         <input type="file" name="passportImage" onChange={handleFileChange} required />
+      </div>
+
+      <div style={{ marginBottom: "15px" }}>
+        <label>Upload your Signature</label>
+        <input type="file" name="signatureImage" onChange={handleFileChange} required />
       </div>
 
       {/* Terms and Conditions */}

@@ -31,7 +31,7 @@ const ResetPassword = () => {
       setMessage("✅ " + response.data.message);
       console.log("Password reset successful:", response.data);
 
-      setTimeout(() => navigate("/?login=true"), 3000);
+      setTimeout(() => navigate("/?login=true"), 2000);
     } catch (error) {
       console.error("Reset Password Error:", error.response?.data || error.message);
       setMessage(error.response?.data?.message || "❌ Something went wrong. Please try again.");

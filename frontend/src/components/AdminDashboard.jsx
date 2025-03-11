@@ -8,6 +8,7 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [kycRequests, setKycRequests] = useState([]);
   const [selectedKYC, setSelectedKYC] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // Search query state
   const [investments, setInvestments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -137,11 +138,35 @@ const AdminDashboard = () => {
   };
 
 
-   // Pagination Logic
-   const indexOfLastUser = currentPage * usersPerPage;
-   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-   const totalPages = Math.ceil(users.length / usersPerPage);
+   // Filter users based on search query (name or email)
+ // Pagination Logic
+ const indexOfLastUser = currentPage * usersPerPage;
+ const indexOfFirstUser = indexOfLastUser - usersPerPage;
+ const filteredUsers = users.filter(
+   (user) =>
+     user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+     user.email.toLowerCase().includes(searchQuery.toLowerCase())
+ );
+ const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+ const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+
+
+ // Filter investments based on search query (name or email)
+const filteredInvestments = investments.filter(
+  (investment) =>
+    investment.user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    investment.user?.email?.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+// Pagination Logic for Investments
+const indexOfLastInvestment = currentPage * usersPerPage;
+const indexOfFirstInvestment = indexOfLastInvestment - usersPerPage;
+const currentInvestments = filteredInvestments.slice(indexOfFirstInvestment, indexOfLastInvestment);
+const totalInvestmentPages = Math.ceil(filteredInvestments.length / usersPerPage);
+
+
+
 
   const printKYC = () => {
     window.print();
@@ -151,41 +176,61 @@ const AdminDashboard = () => {
     <div className="admin-container">
       <Sidebar />
       <div className="admin-content">
-        <h1>Admin Dashboard</h1>
+        <h1>Highbridge Admin Dashboard Panel</h1>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
 
+        <div className="search-container">
+  <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+    <path
+      fillRule="evenodd"
+      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1111.832 3.767l4.23 4.231a1 1 0 11-1.414 1.414l-4.23-4.231A6 6 0 012 8z"
+      clipRule="evenodd"
+    />
+  </svg>
+  <input
+    type="text"
+    placeholder="Search by name or email..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="search-input"
+  />
+</div>
+
         <section>
-  <h2 style={{ color: 'black' }}>Users</h2>
-  {loading ? (
-    <p>Loading...</p>
-  ) : (
-    <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Referral Code</th>
-            <th>Referred By</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.referralCode}</td>
-              <td>{user.referer}</td>
-              <td>
-                <button onClick={() => setSelectedKYC(user)}>View KYC</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <h2 style={{ color: "black" }}>Users</h2>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Referral Code</th>
+                    <th>Referred By</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentUsers.map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.id}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>{user.referralCode}</td>
+                      <td>{user.referer}</td>
+                      <td>
+                        <button onClick={() => setSelectedKYC(user)}>View KYC</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+
+
        {/* Pagination Controls */}
        {totalPages > 1 && (
                 <div className="pagination">
@@ -218,7 +263,7 @@ const AdminDashboard = () => {
       {selectedKYC?.kycData?.passportImage && (
                 <div className="passport-box" style={{ textAlign: "center", marginBottom: "10px" }}>
                   <img
-                    src={`https://highbridge-api-15.onrender.com/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
+                    src={`http://localhost:5000/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
                     alt="Passport"
                     style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "5px", border: "1px solid #ccc" }}
                     onError={(e) => console.error("Passport image failed to load:", e.target.src)}
@@ -240,12 +285,13 @@ const AdminDashboard = () => {
 
         {selectedKYC?.kycData?.idDocumentImage && (
   <img
-  src={`https://highbridge-api-15.onrender.com/${selectedKYC.kycData.idDocumentImage.replace(/\\/g, "/")}`}
+  src={`http://localhost:5000/${selectedKYC.kycData.idDocumentImage.replace(/\\/g, "/")}`}
   alt="Uploaded ID Document"
   style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
   onError={(e) => console.error("Image failed to load:", e.target.src)}
 />
 )}
+
         <h3>Next of Kin</h3>
         <p><strong>Name:</strong> {selectedKYC.kycData?.nextOfKin?.name || "N/A"}</p>
         <p><strong>Phone:</strong> {selectedKYC.kycData?.nextOfKin?.phone || "N/A"}</p>
@@ -266,10 +312,44 @@ const AdminDashboard = () => {
         <p><strong>Corporate Email:</strong> {selectedKYC.kycData?.corporateInfo?.corporateEmail || "N/A"}</p>
       </div>
 
+
+{/* Signature Image Box */}
+{/* Signature Image Box */}
+{selectedKYC?.kycData?.signatureImage && (
+  <div style={{ textAlign: "center", marginBottom: "20px" }}>
+    <p style={{ fontWeight: "bold",  color: "white", marginBottom: "5px" }}>Signature Upload Image</p>
+    <div
+      className="signature-box"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "380px",
+        height: "200px",
+        borderRadius: "5px",
+        border: "1px solid #ccc",
+        overflow: "hidden",
+        margin: "auto",
+      }}
+    >
+      <img
+        src={`http://localhost:5000/${selectedKYC.kycData.signatureImage.replace(/\\/g, "/")}`}
+        alt="Signature"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover", // Fills the box while maintaining aspect ratio
+        }}
+        onError={(e) => console.error("Signature image failed to load:", e.target.src)}
+      />
+    </div>
+  </div>
+)}
+
       {/* Buttons */}
       <div className="kyc-buttons">
         <button className="approve-btn" onClick={() => handleApproveKYC(selectedKYC.id, "approved")}>
-          ✅ Approve
+          ✅ Approved
         </button>
         <button className="reject-btn" onClick={() => handleApproveKYC(selectedKYC.id, "rejected")}>
           ❌ Reject
@@ -288,7 +368,7 @@ const AdminDashboard = () => {
 
 
 <section>
-  <h2>Investments</h2>
+  <h2 style={{ color: "black" }}>Investments</h2>
   {loading ? (
     <p>Loading...</p>
   ) : (
@@ -310,7 +390,7 @@ const AdminDashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {investments.map((investment) => (
+          {filteredInvestments.map((investment) => (
             <tr key={investment._id}>
               <td>{investment._id}</td>
               <td>{investment.user?.name || "N/A"}</td>
@@ -324,7 +404,7 @@ const AdminDashboard = () => {
               <td>
                 {investment.paymentMethod === "manual" && investment.receipt ? (
                   <a
-                    href={investment.receipt.startsWith("http") ? investment.receipt : `https://highbridge-api-15.onrender.com${investment.receipt}`}
+                    href={investment.receipt.startsWith("http") ? investment.receipt : `http://localhost:5000${investment.receipt}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -335,25 +415,25 @@ const AdminDashboard = () => {
                 )}
               </td>
               <td>
-  {investment.status === "Pending" && investment.paymentMethod === "manual" && (
-    <>
-      <button onClick={() => handleApprovePayment(investment._id)}>Approve</button>
-      <button onClick={() => handleDeleteInvestment(investment._id)} className="delete-btn">Delete</button>
-    </>
-  )}
-</td>
+                {investment.status === "Pending" && investment.paymentMethod === "manual" && (
+                  <>
+                    <button onClick={() => handleApprovePayment(investment._id)}>Approved</button>
+                    <button onClick={() => handleDeleteInvestment(investment._id)} className="delete-btn">Delete</button>
+                  </>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-       {/* Pagination Controls */}
-       {totalPages > 1 && (
-                <div className="pagination">
-                  <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
-                  <span>Page {currentPage} of {totalPages}</span>
-                  <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
-                </div>
-              )}
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+        </div>
+      )}
     </div>
   )}
 </section>

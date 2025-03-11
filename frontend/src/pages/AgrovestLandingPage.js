@@ -54,7 +54,7 @@ const AgrovestLandingPage = () => {
       {/* Hero Section */}
  <div className="hero-section">
  <img 
-  src="/assets/images/logo/flipvestlogo.png" 
+  src="/assets/images/logo/FLIPVEST.png" 
   alt="FlipVest Logo" 
   className="hero-logo" 
 />

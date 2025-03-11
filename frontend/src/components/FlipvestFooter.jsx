@@ -10,7 +10,7 @@ const FlipvestFooter = () => {
         {/* Logo and Description */}
         <div className="footer-about">
           <img
-            src="/assets/images/logo/flipvestLOGO.png"
+            src="/assets/images/logo/FLIPVEST.png"
             alt="Highbridge Homes"
             className="footer-logo"
           />

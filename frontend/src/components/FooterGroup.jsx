@@ -1,7 +1,56 @@
 import React from "react";
 import { FaFacebook, FaYoutube, FaTwitter, FaInstagram, FaTelegram } from "react-icons/fa"; // Importing social icons
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa"; // Importing additional icons
-import "./Footer.css";
+import "./FooterGroup.css";
+
+
+const subsidiaries = [
+  {
+    name: "Highbridge Home",
+    logo: "/assets/images/logo/highbridge2.png",
+    links: {
+      facebook: "https://web.facebook.com/highbridgeltd",
+      instagram: "https://www.instagram.com/highbridge_homesltd/",
+      twitter: "https://x.com/Highbridge_ltd",
+      youtube: "https://www.youtube.com/@highbridgetv5660",
+      telegram: "https://telegram.org",
+    },
+  },
+  {
+    name: "Highbridge Flipvest",
+    logo: "/assets/images/logo/FLIPVEST.png",
+    links: {
+      facebook: "https://web.facebook.com/highbridgeltd",
+      instagram: "https://www.instagram.com/highbridge_flipvest/",
+      twitter: "https://x.com/Highbridge_flipvest",
+      youtube: "https://www.youtube.com/@highbridgetv5660",
+      telegram: "https://telegram.org",
+    },
+  },
+  {
+    name: "Highbridge Energy/Tech",
+    logo: "/assets/images/brandlogo/energy2.png",
+    links: {
+      facebook: "https://web.facebook.com/highbridgeltd",
+      instagram: "https://www.instagram.com/highbridge_energytech/",
+      twitter: "https://x.com/Highbridge_energy",
+      youtube: "https://www.youtube.com/@highbridgetv5660",
+      telegram: "https://telegram.org",
+    },
+  },
+  {
+    name: "Highbridge Luxury",
+    logo: "/assets/images/brandlogo/webluxury.png",
+    links: {
+      facebook: "https://web.facebook.com/highbridgeltd",
+      instagram: "https://www.instagram.com/highbridge_luxury/",
+      twitter: "https://x.com/Highbridge_luxury",
+      youtube: "https://www.youtube.com/@highbridgetv5660",
+      telegram: "https://telegram.org",
+    },
+  },
+ 
+];
 
 const FooterGroup = () => {
   return (
@@ -31,13 +80,12 @@ const FooterGroup = () => {
           <h3>Quick Links</h3>
           <ul>
             <li><a href="/about">About Us</a></li>
-            <li><a href="/services">Our Services</a></li>
             <li><a href="/team">Meet Our Team</a></li>
-            <li><a href="/projects">Our Projects</a></li>
-            <li><a href="/training">Digital Training</a></li>
-            <li><a href="/inspection">Book Inspection</a></li>
-            <li><a href="/realtors">Realtor Arena</a></li>
             <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/services">Homes</a></li>
+            <li><a href="/services">Flipvest</a></li>
+            <li><a href="/services">Energy/Tech</a></li>
+            <li><a href="/services">Luxury</a></li>
           </ul>
         </div>
 
@@ -66,30 +114,27 @@ const FooterGroup = () => {
 
         {/* Social Media Links */}
         <div className="footer-social">
-          <h3>Follow Us</h3>
-          <div className="social-icons">
-            <a href="https://web.facebook.com/highbridgeltd" className="social-icon">
-              <FaFacebook />
-            </a>
-            <a href="https://www.youtube.com/@highbridgetv5660 " target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaYoutube />
-            </a>
-            <a href="https://x.com/Highbridge_ltd " target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaTwitter />
-            </a>
-            <a href="https://www.instagram.com/highbridge_homesltd/  " target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaInstagram />
-            </a>
-            <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaTelegram />
-            </a>
+      <h3>Follow Us</h3>
+      <div className="subsidiary-group-container">
+        {subsidiaries.map((subsidiary, index) => (
+          <div key={index} className="subsidiary-group">
+            <img src={subsidiary.logo} alt={subsidiary.name} className="subsidiary-logo" />
+            <div className="social-icons">
+              <a href={subsidiary.links.facebook} className="social-icon"><FaFacebook /></a>
+              <a href={subsidiary.links.instagram} className="social-icon"><FaInstagram /></a>
+              <a href={subsidiary.links.twitter} className="social-icon"><FaTwitter /></a>
+              <a href={subsidiary.links.youtube} className="social-icon"><FaYoutube /></a>
+              <a href={subsidiary.links.telegram} className="social-icon"><FaTelegram /></a>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
+    </div>
+    </div>
 
       {/* Footer Bottom */}
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Highbridge Homes Limited. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Highbridge Group Limited. All rights reserved.</p>
       </div>
     </footer>
   );

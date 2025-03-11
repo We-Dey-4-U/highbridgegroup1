@@ -375,3 +375,42 @@ th, td {
     font-size: 14px; /* Reduce font size for better fit */
   }
 }
+
+
+
+
+/* SearchInput.css */
+/* Search Container */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Search Icon */
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #9ca3af; /* Tailwind gray-400 */
+}
+
+/* Search Input */
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  color: #374151;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+}
