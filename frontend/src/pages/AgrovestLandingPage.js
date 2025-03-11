@@ -102,7 +102,7 @@ const AgrovestLandingPage = () => {
       {/* Mobile Navigation */}
       <div className={`mobile-nav ${isMobileNavOpen ? "open" : ""}`}>
         <Link to="/" onClick={toggleMobileNav}>Home</Link>
-        <Link to="/agroves" onClick={toggleMobileNav}>Agrovest</Link>
+        <Link to="/agrovest" onClick={toggleMobileNav}>Agrovest</Link>
         <Link to="/buy2flip" onClick={toggleMobileNav}>Buy2Flip</Link>
       </div>
 
