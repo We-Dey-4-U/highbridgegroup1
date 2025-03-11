@@ -52,7 +52,7 @@ const HeroSection = () => {
     e.preventDefault();
     setLoading(true);
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/register", user);
+        const response = await axios.post("https://highbridge-api-16.onrender.com/api/auth/register", user);
         setSubmissionSuccess(response.data.message);
         setUser({ name: "", email: "", phone: "", password: "", referralCode: "" });
 
@@ -67,7 +67,7 @@ const HeroSection = () => {
   const handleForgotPassword = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/forgot-password", { email: forgotPasswordEmail });
+      const response = await axios.post("https://highbridge-api-16.onrender.com/api/auth/forgot-password", { email: forgotPasswordEmail });
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Something went wrong. Try again.");
@@ -85,7 +85,7 @@ const HeroSection = () => {
     setSubmissionSuccess(""); // Clear previous messages
 
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/login", loginData);
+        const response = await axios.post("https://highbridge-api-16.onrender.com/api/auth/login", loginData);
         const { token, user } = response.data;
 
         if (token && user) {
