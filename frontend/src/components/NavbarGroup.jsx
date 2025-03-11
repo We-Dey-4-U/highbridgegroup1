@@ -17,7 +17,7 @@ const NavbarGroup = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <img src="/assets/images/logo/group.png" alt="Highbridge Homes Logo" />
+        
         </div>
 
         {/* Hamburger Icon for Mobile */}

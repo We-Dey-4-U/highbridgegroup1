@@ -45,7 +45,7 @@ const FeaturedAgrovest = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post("http://localhost:5000/api/auth/register", user);
+            const response = await axios.post("https://highbridge-api-15.onrender.com/api/auth/register", user);
             setSubmissionSuccess(response.data.message);
             setUser({ email: "", phone: "", name: "", password: "", referralCode: "" });
             setIsRegistering(false);
@@ -59,7 +59,7 @@ const FeaturedAgrovest = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post("https://highbridge-api-12.onrender.com/api/auth/login", loginData);
+            const response = await axios.post("https://highbridge-api-15.onrender.com/api/auth/login", loginData);
             const { token, user } = response.data;
             if (token && user) {
                 localStorage.setItem("token", token);
@@ -90,21 +90,24 @@ const FeaturedAgrovest = () => {
                             <h2>{isRegistering ? "Register" : "Login"}</h2>
                             {submissionSuccess && <p className="message">{submissionSuccess}</p>}
                             <form onSubmit={isRegistering ? handleSubmit : handleLoginSubmit}>
-                                {isRegistering ? (
-                                    <>
-                                        <input type="text" placeholder="Name" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} required />
-                                        <input type="email" placeholder="Email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} required />
-                                        <input type="text" placeholder="Phone" value={user.phone} onChange={(e) => setUser({ ...user, phone: e.target.value })} required />
-                                        <input type="password" placeholder="Password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} required />
-                                        <input type="text" placeholder="Referral Code (Optional)" value={user.referralCode} onChange={(e) => setUser({ ...user, referralCode: e.target.value })} />
-                                    </>
-                                ) : (
-                                    <>
-                                        <input type="email" placeholder="Email" value={loginData.email} onChange={(e) => setLoginData({ ...loginData, email: e.target.value })} required />
-                                        <input type="password" placeholder="Password" value={loginData.password} onChange={(e) => setLoginData({ ...loginData, password: e.target.value })} required />
-                                    </>
-                                )}
-                                <button type="submit" disabled={loading}>{loading ? "Processing..." : isRegistering ? "Register" : "Login"}</button>
+                            {isRegistering ? (
+    <>
+        <input type="text" placeholder="Name" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} required />
+        <input type="email" placeholder="Email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} required />
+        <input type="text" placeholder="Phone" value={user.phone} onChange={(e) => setUser({ ...user, phone: e.target.value })} required />
+        <input type="password" placeholder="Password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} required />
+        <input type="text" placeholder="Referral Code (Optional)" value={user.referralCode} onChange={(e) => setUser({ ...user, referralCode: e.target.value })} />
+    </>
+) : (
+    <>
+        <input type="email" placeholder="Email" value={loginData.email} onChange={(e) => setLoginData({ ...loginData, email: e.target.value })} required />
+        <input type="password" placeholder="Password" value={loginData.password} onChange={(e) => setLoginData({ ...loginData, password: e.target.value })} required />
+        <p className="forgot-password">
+            <Link to="/forgot-password">Forgot Password?</Link>
+        </p>
+    </>
+)}
+<button type="submit" disabled={loading}>{loading ? "Processing..." : isRegistering ? "Register" : "Login"}</button>
                             </form>
                             <p onClick={() => setIsRegistering(!isRegistering)} className="toggle-link">
                                 {isRegistering ? "Already have an account? Login" : "Don't have an account? Register"}

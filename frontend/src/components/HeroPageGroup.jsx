@@ -37,10 +37,10 @@ const HeroPageGroup = () => {
       {/* Hero content */}
       <div className="hero-content">
         <h1 style={{ color: "#fff" }}>
-          💰 Building Wealth, Empowering Future: Your Path to Financial Freedom! 🌾📈
+          💰 Building Wealth, Empowering Future: Your Path to Financial Freedom! 📈
         </h1>
         <p style={{ color: "white", fontWeight: "700", fontSize: "1.2rem", textAlign: "center" }}>
-        Innovative, Sustainable and High-Value Opportunities Across Real Estate,Energy, Agriculture Energy, Agriculture , and Investments.
+        Innovative, sustainable, and high-value opportunities across real estate, energy/tech, agriculture and investments.
         </p>
       </div>
     </div>

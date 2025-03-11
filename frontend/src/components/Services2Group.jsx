@@ -11,7 +11,7 @@ const servicesList = [
   },
   {
     icon: 'fas fa-seedling',
-    title: 'Agrovest',
+    title: 'Flipvest',
     description: 'Secure agricultural investments with high returns through sustainable farming with higbridge flipvest.',
     image: '/assets/images/hero/heroimage4.jpg',
     link: '/flipvest',
@@ -25,7 +25,7 @@ const servicesList = [
   },
   {
     icon: 'fas fa-gem', // Luxury and exclusivity
-    title: 'Highbridge Luxury Homes',
+    title: 'Luxury',
     description: 'Experience the pinnacle of elegance and comfort with our premium real estate solutions.',
     image: '/assets/images/hero/luxury2.jpg',
     link: 'https://highbridgeluxury.com/', // External URL

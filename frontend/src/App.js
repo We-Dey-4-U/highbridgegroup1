@@ -45,6 +45,9 @@ import AdminDashboard from "./components/AdminDashboard"; // Import Admin Dashbo
 import AgroVest from "./components/AgroVest";
 import Buy2Flip from "./components/Buy2Flip";
 
+import ResetPassword from "./components/ResetPassword";
+
+
 
 
 const App = () => {
@@ -104,6 +107,11 @@ const App = () => {
          <Route path="/dashboard/:userId" element={<DashboardPage />} />
          <Route path="/admin/dashboard" element={<AdminDashboard />} /> {/* Admin Dashboard Route */}
          <Route path="/payment-success" element={<PaymentSuccess />} />
+
+
+
+        
+         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

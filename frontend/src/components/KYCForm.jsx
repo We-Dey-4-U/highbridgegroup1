@@ -10,7 +10,7 @@ const KYCForm = ({ onKycUpdate }) => {
     occupation: "",
     placeOfWork: "",
     workAddress: "",
-    idDocumentType: "", 
+    idDocumentType: "",
     nextOfKin: {
       name: "",
       phone: "",
@@ -35,10 +35,10 @@ const KYCForm = ({ onKycUpdate }) => {
   const [idFile, setIdFile] = useState(null);
   const [passportFile, setPassportFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false); // New state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setKYCData((prev) => {
       const keys = name.split(".");
       if (keys.length === 2) {
@@ -92,7 +92,7 @@ const KYCForm = ({ onKycUpdate }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/auth/update-kyc",
+        "https://highbridge-api-15.onrender.com/api/auth/update-kyc",
         formData,
         {
           headers: {
@@ -121,8 +121,8 @@ const KYCForm = ({ onKycUpdate }) => {
         borderRadius: "8px",
         background: "#000",
         color: "#fff",
-        maxHeight: "80vh", // Limit height
-        overflowY: "auto", // Enable scrolling
+        maxHeight: "80vh",
+        overflowY: "auto",
       }}
     >
       <h2 style={{ textAlign: "center" }}>IoT-Enabled KYC Form</h2>
@@ -179,17 +179,31 @@ const KYCForm = ({ onKycUpdate }) => {
         <input type="file" name="passportImage" onChange={handleFileChange} required />
       </div>
 
+      {/* Terms and Conditions */}
+      <div style={{ margin: "15px 0" }}>
+        <input
+          type="checkbox"
+          id="terms"
+          checked={agreedToTerms}
+          onChange={() => setAgreedToTerms(!agreedToTerms)}
+          required
+        />
+        <label htmlFor="terms" style={{ marginLeft: "8px" }}>
+          I agree to the <a href="/terms" target="_blank" style={{ color: "#007bff" }}>Terms and Conditions</a>
+        </label>
+      </div>
+
       <button
         type="submit"
-        disabled={loading}
+        disabled={!agreedToTerms || loading}
         style={{
           width: "100%",
           padding: "10px",
-          background: "#007bff",
+          background: agreedToTerms ? "#007bff" : "#555",
           color: "#fff",
           border: "none",
           borderRadius: "4px",
-          cursor: "pointer",
+          cursor: agreedToTerms ? "pointer" : "not-allowed",
         }}
       >
         {loading ? "Submitting..." : "Submit KYC"}
@@ -199,4 +213,3 @@ const KYCForm = ({ onKycUpdate }) => {
 };
 
 export default KYCForm;
-

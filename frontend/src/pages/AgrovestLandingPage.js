@@ -11,8 +11,8 @@ import { FaCommentDots } from "react-icons/fa"; // Import an icon from react-ico
 
 
 const images = [
-  "/assets/images/hero/landhero2.png",
-  "/assets/images/hero/handhero.png",
+  "/assets/images/hero/webpic23.jpg",
+  "/assets/images/hero/webpic23.jpg",
   "/assets/images/hero/landhero3.png",
 ];
 
@@ -69,7 +69,7 @@ const AgrovestLandingPage = () => {
   />
   <div className="hero-content">
     <h1 style={{ color: "#fff" }}>
-      💰 Invest Today, Secure Tomorrow: Your Path to Financial Freedom! 🌾📈
+      💰 Invest Today, Secure Tomorrow: Your Path to Financial Freedom! 📈
     </h1>
     <p></p>
 

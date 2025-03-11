@@ -30,21 +30,7 @@ const FeaturedGroup = () => {
                 <p style={{ color: 'white' }}>
                   Highbridge Group offers top-tier investment opportunities, including premium residential developments, cutting-edge agribusiness ventures, and innovative energy solutions. Our commitment to quality, sustainability, and strategic growth ensures long-term value for investors.
                  </p>
-                    <a href="/flipvest" className="btn" style={{
-                        display: 'inline-block',
-                        padding: '10px 20px',
-                        backgroundColor: '#28a745',
-                        color: 'white',
-                        textAlign: 'center',
-                        textDecoration: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.3s ease'
-                    }} onMouseEnter={(e) => e.target.style.backgroundColor = '#218838'} onMouseLeave={(e) => e.target.style.backgroundColor = '#28a745'}>
-                        View More Opportunities
-                    </a>
+                   
                 </div>
             </div>
         </div>

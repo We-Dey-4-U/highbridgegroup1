@@ -273,6 +273,52 @@
 
 
 
+.investment-form {
+  background-color: green;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.investment-form label {
+  color: white;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.investment-form select,
+.investment-form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: none;
+}
+
+.investment-form button {
+  margin-top: 15px;
+  background-color: white;
+  color: green;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}
+
+.investment-form button:disabled {
+  background-color: lightgray;
+  cursor: not-allowed;
+}
+
+
+
+
+
+
 
 
 

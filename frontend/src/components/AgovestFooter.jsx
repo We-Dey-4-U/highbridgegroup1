@@ -10,7 +10,7 @@ const AgrovestFooter= () => {
         {/* Logo and Description */}
         <div className="footer-about">
           <img
-            src="/assets/images/logo/group.png"
+            src="/assets/images/logo/agrovestlog.webp"
             alt="Highbridge Homes"
             className="footer-logo"
           />

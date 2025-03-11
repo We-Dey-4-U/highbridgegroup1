@@ -9,11 +9,11 @@ const AboutGroup = () => {
       <div className="about-content">
         <div className="about-text">
           <p>
-          Highbridge Group is a leading Nigerian conglomerate dedicated to connecting local and global clients 
-          with high-value opportunities across real estate, energy, agriculture, and investments. Committed to 
-          innovation, sustainability, and excellence, we empower individuals and businesses with 
+          Highbridge Group is a leading Nigerian conglomerate dedicated to connecting local and global 
+          clients with high-value opportunities across real estate, energy/tech, agriculture and investments. 
+          Committed to innovation, sustainability and excellence. We empower individuals and businesses with 
           technology-driven solutions that foster economic growth and long-term value creation. Guided by 
-          integrity, expertise, and a client-first approach, we set industry benchmarks while driving 
+          integrity, expertise, and a client-first approach. We set industry benchmarks while driving 
           development and wealth creation for Nigerians and global investors. Through our subsidiaries,
            we leverage synergy, strategic partnerships, and cutting-edge technology to shape a better future.
 

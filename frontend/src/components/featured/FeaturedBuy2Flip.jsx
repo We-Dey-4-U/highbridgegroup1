@@ -2,74 +2,93 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './FeaturedAgrovest.css';
 
-import House1 from '../../assets/subscrptionimage.jpg';
-import Bed1 from '../../assets/process.jpg';
-import Kitchen from '../../assets/fruits.jpg';
-import Bathroom from '../../assets/farm.jpg';
+import House1 from '../../assets/buy2flipbanner.jpg';
+import Bed1 from '../../assets/webpic23.jpg';
+import Kitchen from '../../assets/buy2flipbanner.jpg';
+import Bathroom from '../../assets/buy2flipflier2.jpg';
 import LivingRoom from '../../assets/container.jpg';
 
 const FeaturedBuy2Flip = () => {
     return (
         <div className='featured1'>
-           <h1 className='featured-text'>Secure Your Future: Profitable Agricultural Investments in Nigeria!</h1>
-           <p className='featured-text'>A dedicated investment scheme for agro-allied industries, including both crop and livestock investments.</p>
+           <h1 className='featured-text'>Maximize Your Returns with Buy2Flip Investments!</h1>
+           <p className='featured-text'>A high-yield investment scheme focusing on short-term asset flipping for rapid profit realization.</p>
             
             {/* Image Grid */}
-            {/* Image Grid */}
-<div className='container'>
-    <figure className='span-3 image-grid-row-2'>
-        <img src={House1} alt='Featured Property' />
-        <figcaption style={{ color: 'white' }}>Agro-Allied Investments</figcaption>
-    </figure>
-    <figure>
-        <img src={Bed1} alt='Energy Investments' />
-        <figcaption style={{ color: 'white' }}>Renewable Energy</figcaption>
-    </figure>
-    <figure>
-        <img src={LivingRoom} alt='Living Room' />
-        <figcaption style={{ color: 'white' }}>Real Estate Opportunities</figcaption>
-    </figure>
-    <figure>
-        <img src={Kitchen} alt='Kitchen' />
-        <figcaption style={{ color: 'white' }}>Smart Agriculture</figcaption>
-    </figure>
-    <figure>
-        <img src={Bathroom} alt='Bathroom' />
-        <figcaption style={{ color: 'white' }}>Subscription-Based Models</figcaption>
-    </figure>
-</div>
-
-            {/* AgroVest Information */}
-            <div className="agrovest-info">
-                <h2>AgroVest Investment Opportunities</h2>
-                <p>AgroVest is a strategic investment opportunity focused on agro-allied industries, encompassing both livestock and crop investments. It provides investors with an opportunity to earn attractive returns by funding profitable agricultural ventures.</p>
-
-                <h3>Why Invest in HighBridge AgroVest?</h3>
-                <p>With HighBridge AgroVest, you can invest in sustainable agriculture, supporting food production while securing financial growth.</p>
-
-                <h3>Investment Plans</h3>
-                <ul>
-                    <li><strong>6-Month Plan:</strong> Minimum N500,000 with 25% ROI (Maximum: N10,000,000).</li>
-                    <li><strong>9-Month Plan:</strong> Minimum N500,000 with 30% ROI (No maximum limit).</li>
-                    <li><strong>12-Month Plan:</strong> Minimum N500,000 with 50% ROI (No maximum limit).</li>
-                    <li><strong>18-Month Plan:</strong> Minimum N500,000 with 75% ROI (No maximum limit).</li>
-                </ul>
-                <p>Once payment is confirmed, you will receive a Payment Receipt, Deed of Contract, and a Post-dated Cheque.</p>
-
-                <h3>Livestock Investment Opportunities</h3>
-                <ul>
-                    <li><strong>Snail Farming:</strong> Low maintenance with high-profit potential and minimal startup costs.</li>
-                    <li><strong>Piggery:</strong> Profitable venture focusing on breeding and rearing pigs, offering scalable income.</li>
-                    <li><strong>Fishery:</strong> Investment in fish farming, including tilapia, catfish, and other high-demand species.</li>
-                </ul>
-
-                <h3>Crop Investment Opportunities</h3>
-                <ul>
-                    <li><strong>Vegetables:</strong> Includes tomatoes, peppers, and onions, which are in constant demand.</li>
-                    <li><strong>Grains:</strong> Covers maize, millet, sorghum, and other staple crops.</li>
-                    <li><strong>Fruits & Others:</strong> A diverse range of crops with seasonal return potential.</li>
-                </ul>
+            <div className='container'>
+                <figure className='span-3 image-grid-row-2'>
+                    <img src={House1} alt='Buy2Flip Investments' />
+                    <figcaption style={{ color: 'white' }}>Short-Term Property Flipping</figcaption>
+                </figure>
+                <figure>
+                    <img src={Bed1} alt='Luxury Items' />
+                    <figcaption style={{ color: 'white' }}>Luxury Goods Resale</figcaption>
+                </figure>
+                <figure>
+                    <img src={LivingRoom} alt='Tech Gadgets' />
+                    <figcaption style={{ color: 'white' }}>High-Demand Tech</figcaption>
+                </figure>
+                <figure>
+                    <img src={Kitchen} alt='Automobiles' />
+                    <figcaption style={{ color: 'white' }}>Vehicle Trading</figcaption>
+                </figure>
+                <figure>
+                    <img src={Bathroom} alt='Retail Assets' />
+                    <figcaption style={{ color: 'white' }}>Wholesale Bulk Trading</figcaption>
+                </figure>
             </div>
+
+            {/* Buy2Flip Information */}
+            <div className="buy2flip-info">
+            <h2>Buy2Flip Investment Scheme</h2>
+            <p>Buy2Flip is a short-term, high-liquidity investment model that allows investors to acquire valuable assets and sell them at a predetermined profit within a set period. This strategy ensures quick returns and reduces long-term capital lock-in.</p>
+
+            <h3>Highbridge Gardens Estate – Ibeju-Lekki</h3>
+            <p>Buy2Flip provides investment opportunities in Highbridge Gardens Estate, Ibeju-Lekki, where investors can purchase land and resell it at a guaranteed higher price after a specified period.</p>
+
+            <h3>Investment Plans</h3>
+            <ul>
+            <li><strong>6-Month Plan:</strong> Minimum N2,000,000 for 50sqm with 20% ROI.</li>
+             <li><strong>12-Month Plan:</strong> Minimum N2,000,000 for 50sqm with 40% ROI.</li>
+           </ul>
+            <p>Upon confirmation of payment, investors receive:</p>
+            <ul>
+                <li><strong>Payment Receipt</strong></li>
+                <li><strong>Contract of Sale</strong></li>
+                <li><strong>Post-Dated Cheque</strong> (for buy-back at the agreed price)</li>
+            </ul>
+
+            <h3>Investment Flexibility</h3>
+            <ul>
+                <li>Investors have the option to retain their purchased plots after the maturity period.</li>
+                <li>Dividends apply only to those who sell back their plots, not those who retain them.</li>
+                <li>Early termination incurs a 20% charge, and all accrued profits are forfeited.</li>
+            </ul>
+
+            <h3>Refund Process</h3>
+            <ul>
+                <li>A written or email notice is required to initiate a refund request.</li>
+                <li>Refunds are processed within 30 days, with an additional 21 days if necessary.</li>
+                <li>A 20% deduction is applied for administrative, logistics, and agency fees.</li>
+            </ul>
+
+            <h3>Flipping Opportunities</h3>
+            <ul>
+                <li><strong>Real Estate:</strong> High-value property investments with quick resale.</li>
+                <li><strong>Luxury Goods:</strong> Flipping high-end watches, designer bags, and jewelry.</li>
+                <li><strong>Automobiles:</strong> Buying and reselling high-demand cars and motorcycles.</li>
+                <li><strong>Electronics & Gadgets:</strong> Fast-moving smartphones, laptops, and gaming consoles.</li>
+                <li><strong>Retail Bulk Trading:</strong> Wholesaling consumer goods with rapid resale cycles.</li>
+            </ul>
+
+            <h3>Key Benefits</h3>
+            <ul>
+                <li><strong>Guaranteed Resale Price:</strong> Fixed buy-back pricing minimizes risk.</li>
+                <li><strong>High Liquidity:</strong> Funds are not locked for extended periods.</li>
+                <li><strong>Diverse Investment Options:</strong> Multiple asset categories beyond real estate.</li>
+                <li><strong>Transparent Process:</strong> Investors receive full documentation, including contracts and post-dated cheques.</li>
+            </ul>
+        </div>
         </div>
     );
 };

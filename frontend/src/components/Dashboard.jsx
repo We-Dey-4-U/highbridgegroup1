@@ -48,52 +48,42 @@ useEffect(() => {
       }
 
       console.log("🟢 Fetching dashboard data...");
-      const response = await axios.get("https://highbridge-api-12.onrender.com/api/dashboard", {
+      const response = await axios.get("https://highbridge-api-15.onrender.com/api/dashboard", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       console.log("✅ API Response:", response.data);
 
-      if (response.data.kycApproved) {
-        response.data.kycVerified = true;
-      }
-
-      // ✅ Ensure investments are updated correctly
-      setUser((prevUser) => {
-        const newInvestments = response.data.investments || [];
-
-        // Ensure correct payment method
-        const updatedInvestments = newInvestments.map((inv) => ({
-          ...inv,
-          paymentMethod: inv.paymentMethod || "manual", // ✅ Ensure manual is set if missing
-        }));
-
-        console.log("📊 Updated Investments:", updatedInvestments);
-
-        return {
-          ...response.data,
-          investments: updatedInvestments, // ✅ Update investments in state
-        };
+      setUser({
+        ...response.data,
+        investments: response.data.investments || [],
       });
 
-      setReferralCode(response.data.referralCode || "N/A");
+      // ✅ Ensure countdown and paymentMethod are correctly stored
+      const countdowns = {};
+      response.data.investments?.forEach((investment) => {
+        if (investment.status === "Active") {
+          countdowns[investment._id] = investment.countdown ?? "N/A";
+        }
+      });
 
-      // ✅ Process Investments for Chart
-      const formattedData = response.data.investments
-        ? response.data.investments.map((investment) => {
-            const plan = investmentPlans.find((p) => p.value === investment.plan);
-            const percentage = plan ? parseFloat(plan.label.match(/(\d+)%/)[1]) : 0;
-            const expectedReturns = plan ? (investment.amount * percentage) / 100 : 0;
+      setInvestmentCountdowns(countdowns);
 
-            return {
-              name: investment.plan,
-              amount: investment.amount,
-              expectedReturns,
-              paymentMethod: investment.paymentMethod || "manual", // ✅ Ensure payment method is set
-              status: investment.status || "Pending",
-            };
-          })
-        : [];
+      // ✅ Prepare Data for Chart
+      const formattedData = response.data.investments?.map((investment) => {
+        const plan = investmentPlans.find((p) => p.value === investment.plan);
+        const percentage = plan ? parseFloat(plan.label.match(/(\d+)%/)[1]) : 0;
+        const expectedReturns = plan ? (investment.amount * percentage) / 100 : 0;
+
+        return {
+          name: investment.plan,
+          amount: investment.amount,
+          expectedReturns,
+          paymentMethod: investment.paymentMethod || "N/A", // ✅ Ensure paymentMethod is set
+          status: investment.status || "Pending",
+          countdown: investment.countdown ?? "N/A", // ✅ Ensure countdown is set
+        };
+      });
 
       console.log("📊 Updated Investment Data:", formattedData);
       setInvestmentData(formattedData);
@@ -106,60 +96,7 @@ useEffect(() => {
   };
 
   fetchDashboardData();
-}, [navigate]); // ✅ Dependency array ensures re-fetch on navigation
-
-
-
-
- // Function to format countdown time
-// Function to format countdown time
-const formatTime = (ms) => {
-  if (ms <= 0) return "Completed";
-  const days = Math.floor(ms / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((ms / (1000 * 60)) % 60);
-  const seconds = Math.floor((ms / 1000) % 60);
-  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-};
-
-// Effect to track countdown for active investments
- // Initialize countdowns when investments load
- useEffect(() => {
-  if (user?.investments) {
-    const countdowns = {};
-    user.investments.forEach((investment) => {
-      if (investment.status === "active") {
-        const maturityDate = new Date(investment.maturityDate).getTime();
-        const now = Date.now();
-        countdowns[investment.id] = Math.max(0, maturityDate - now);
-      }
-    });
-    setInvestmentCountdowns(countdowns);
-  }
-}, [user?.investments]);
-
-// Update countdown every second
-useEffect(() => {
-  const interval = setInterval(() => {
-    setInvestmentCountdowns((prevCountdowns) => {
-      const updatedCountdowns = { ...prevCountdowns };
-
-      user?.investments?.forEach((investment) => {
-        if (investment.status === "active") {
-          const remainingTime = new Date(investment.maturityDate).getTime() - Date.now();
-          updatedCountdowns[investment.id] = Math.max(0, remainingTime);
-        }
-      });
-
-      return updatedCountdowns;
-    });
-  }, 1000);
-
-  return () => clearInterval(interval);
-}, [user?.investments]);
-
-
-
+}, [navigate]);// ✅ Fetch data when navigating
 
 
 
@@ -194,16 +131,6 @@ useEffect(() => {
 };
 
 
-
-
-
-
-
-
-
-
-
-  
 const handlePayment = async () => {
   console.log("👤 User Data: ", user);
   console.log("📌 Selected Plan: ", selectedPlan);
@@ -256,7 +183,7 @@ const handlePayment = async () => {
 
           console.log("🚀 Sending Payment Data:", paymentData);
           const response = await axios.post(
-              "https://highbridge-api-12.onrender.com/api/payments/initiate-flutterwave-payment",
+              "https://highbridge-api-15.onrender.com/api/payments/initiate-flutterwave-payment",
               paymentData,
               { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -283,7 +210,7 @@ const handlePayment = async () => {
           formData.append("receipt", paymentReceipt);
 
           const manualResponse = await axios.post(
-              "https://highbridge-api-12.onrender.com/api/payments/manual-payment",
+              "https://highbridge-api-15.onrender.com/api/payments/manual-payment",
               formData,
               {
                   headers: {
@@ -325,15 +252,6 @@ const handlePayment = async () => {
 
 
   if (loading) return <p>Loading dashboard...</p>;
-
-
-
-
-
-
-
-
-
 
   return (
     <div className="dashboard-container">
@@ -449,79 +367,85 @@ const handlePayment = async () => {
         <p><strong>Account Name:</strong> HIGHBRIDGE FLIPVEST LIMITED</p>
         <p><strong>Account Number:</strong> 1229557601</p>
         <p>Please make the payment and upload the receipt to proceed.</p>
-        <p style={{ color: "red", fontWeight: "bold" }}>
-          Warning: You must complete the payment within 24 hours, or the initiated payment will be deleted.
+        <p style={{ color: "green", fontWeight: "bold" }}>
+          Kindly complete your payment within 24 hours, to activate your investment.
         </p>
       </div>
     </div>
   </div>
 )}
 
-     {/* ✅ User Investments */}
+
+{/* ✅ User Investments */}
 <h2>Your Investments</h2>
-<div className="investments-container">
-  {user?.investments?.length ? (
-    <div className="table-wrapper">
-      <table className="investment-table">
-        <thead>
-          <tr>
-            <th>Plan</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Start Date</th>
-            <th>Maturity Date</th>
-            <th>Countdown</th>
-            <th>Expected Returns</th>
-            <th>Payment Method</th>
-            <th>Receipt</th>
-          </tr>
-        </thead>
-        <tbody>
-          {user.investments.map((investment, index) => (
-            <tr key={index} className="investment-row">
-              <td>{investment.plan}</td>
-              <td>
-                {new Intl.NumberFormat("en-NG", {
-                  style: "currency",
-                  currency: "NGN",
-                }).format(investment.amount)}
-              </td>
-              <td>{investment.status}</td>
-              <td>{new Date(investment.startDate).toDateString()}</td>
-              <td>{new Date(investment.maturityDate).toDateString()}</td>
-              <td>
-                {investment.status === "active"
-                  ? formatTime(investmentCountdowns[investment.id] || 0)
-                  : "N/A"}
-              </td>
-              <td>
-                {new Intl.NumberFormat("en-NG", {
-                  style: "currency",
-                  currency: "NGN",
-                }).format(investment.expectedReturns)}
-              </td>
-              <td>{investment.paymentMethod === "manual" ? "Manual Payment" : "Flutterwave"}</td>
-              <td>
-                {investment.paymentMethod === "manual" && investment.receiptUrl ? (
-                  <a href={investment.receiptUrl} target="_blank" rel="noopener noreferrer" className="receipt-link">
-                    View Receipt
-                  </a>
-                ) : "N/A"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  ) : (
-    <p style={{ color: "white" }}>No active investments</p>
-  )}
-</div>
-
-
-
-
-
+      <div className="investments-container">
+        {user?.investments?.length ? (
+          <div className="table-wrapper">
+            <table className="investment-table">
+              <thead>
+                <tr>
+                  <th>Plan</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Start Date</th>
+                  <th>Maturity Date</th>
+                  <th>Days to Maturity</th>
+                  <th>Expected Returns</th>
+                  <th>Payment Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                {user?.investments?.map((investment, index) => (
+                  <tr key={index} className="investment-row">
+                    <td>{investment?.plan || "N/A"}</td>
+                    <td>
+                      {investment?.amount
+                        ? new Intl.NumberFormat("en-NG", {
+                            style: "currency",
+                            currency: "NGN",
+                          }).format(investment.amount)
+                        : "N/A"}
+                    </td>
+                    <td>{investment?.status || "N/A"}</td>
+                    <td>
+                      {investment?.startDate
+                        ? new Date(investment.startDate).toDateString()
+                        : "N/A"}
+                    </td>
+                    <td>
+                      {investment?.maturityDate
+                        ? new Date(investment.maturityDate).toDateString()
+                        : "N/A"}
+                    </td>
+                    <td>
+                      {investment?.status === "Active"
+                        ? investmentCountdowns[investment._id] ?? "N/A"
+                        : "N/A"}
+                    </td>
+                    <td>
+                      {investment?.expectedReturns
+                        ? new Intl.NumberFormat("en-NG", {
+                            style: "currency",
+                            currency: "NGN",
+                          }).format(investment.expectedReturns)
+                        : "N/A"}
+                    </td>
+                    <td>
+                      {investment?.paymentMethod
+                        ? investment.paymentMethod === "manual"
+                          ? "Manual Payment"
+                          : "Flutterwave"
+                        : "N/A"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p style={{ color: "white" }}>No active investments</p>
+        )}
+      </div>
 
 
 <div className="investment-form">
