@@ -56,7 +56,7 @@ const NavbarGroup = () => {
                 </li>
                 {/* Internal links remain unchanged */}
                 <li><a href="/HighbridgeHomes">Highbridge Homes Limited</a></li>
-                <li><a href="/highbridge-tech">Highbridge Agrotech and Agro alien Limited</a></li>
+                <li><a href="/highbridge-tech">Highbridge Agrotech and Agro-Allied Limited</a></li>
                 <li><a href="/flipvest">Highbridge Flipvest</a></li>
                 <li>
                   <a href="https://highbridgeluxury.com/" target="_blank" rel="noopener noreferrer">

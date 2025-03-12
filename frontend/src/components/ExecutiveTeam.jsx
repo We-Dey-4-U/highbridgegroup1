@@ -12,7 +12,7 @@ const executiveMembers = [
     { name: "Engr. Olawale Popoola", role: "Managing Director", image: mdImage }, // Correct path for MD 
     { name: "Mrs.Busayo Popoola", role: "Executive Director", image: edImage }, // Correct path for ED 
     { name: "Suleiman David", role: "General Manager", image: gmImage }, // Correct path for GM 
-    { name: "Mrs. Lilian Ezenwanagu", role: "Human Resources", image: hrImage }, // Correct path for HR
+    { name: "Miss.Lilian Ezenwanagu", role: "Human Resource Manager", image: hrImage }, // Correct path for HR
 ];
 
 const ExecutiveTeam = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import FlipvestFooter from "../components/FlipvestFooter"; // ✅ Import Footer
+import AgrovestFooter from "../components/AgovestFooter"; // ✅ Import Footer
 import "./Dashboard.css"; // ✅ Import Styles
 import KYCForm from "../components/KYCForm"; // ✅ Import KYCForm component
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid  } from "recharts"; // ✅ Import Recharts
@@ -496,7 +496,7 @@ const handlePayment = async () => {
 
       {paymentLink && <a href={paymentLink} target="_blank" rel="noopener noreferrer">Proceed to Payment</a>}
 
-      <FlipvestFooter />
+      <AgrovestFooter />
     </div>
   );
 };

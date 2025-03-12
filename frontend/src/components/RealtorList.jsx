@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import "./RealtorList.css";
 
-const API_BASE_URL = "http://localhost:5000/api/realtors/realtors";
+const API_BASE_URL = "http://localhost:5000/api/admin/realtors";
 
 const RealtorList = () => {
   const [realtors, setRealtors] = useState([]);
@@ -18,7 +16,19 @@ const RealtorList = () => {
   useEffect(() => {
     const fetchRealtors = async () => {
       try {
-        const response = await axios.get(API_BASE_URL);
+        const token = localStorage.getItem("token"); // Retrieve the token from localStorage (or context)
+        if (!token) {
+          setError("Unauthorized: No token found");
+          setLoading(false);
+          return;
+        }
+  
+        const response = await axios.get(API_BASE_URL, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in the request headers
+          },
+        });
+  
         setRealtors(response.data);
       } catch (err) {
         setError("Error fetching realtors");
@@ -26,9 +36,11 @@ const RealtorList = () => {
         setLoading(false);
       }
     };
-
+  
     fetchRealtors();
   }, []);
+
+
 
   const handleView = (realtor) => {
     setSelectedRealtor(realtor);
@@ -83,7 +95,7 @@ const RealtorList = () => {
 
   return (
     <div className="realtor-list-page">
-      <Navbar />
+      
       <div className="realtor-list-container">
         <h2>Realtors List</h2>
         {loading ? (
@@ -227,7 +239,6 @@ const RealtorList = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 };

@@ -79,13 +79,12 @@ const FooterGroup = () => {
         <div className="footer-links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="/about">About Us</a></li>
+            <li><a href="/about-us-group">About Us</a></li>
             <li><a href="/team">Meet Our Team</a></li>
             <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/services">Homes</a></li>
-            <li><a href="/services">Flipvest</a></li>
-            <li><a href="/services">Energy/Tech</a></li>
-            <li><a href="/services">Luxury</a></li>
+            <li><a href="/flipvest">Flipvest</a></li>
+            <li><a href="/">Energy/Tech</a></li>
+            <li><a href="/">Luxury</a></li>
           </ul>
         </div>
 

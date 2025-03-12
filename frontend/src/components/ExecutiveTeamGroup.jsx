@@ -11,8 +11,8 @@ import edImage from "../assets/ed.jpg"; // Correct path for ED
 const executiveMembers = [
     { name: "Engr. Olawale Popoola", role: "Managing Director", company: "HighbridgeGroup", image: mdImage }, // Correct path for MD 
     { name: "Mrs.Busayo Popoola", role: "Executive Director", company: "HighbridgeGroup", image: edImage }, // Correct path for ED 
-    { name: "Suleiman David", role: "General Manager", company: "HighbridgeGroup", image: gmImage }, // Correct path for GM 
-    { name: "Mrs. Lilian Ezenwanagu", role: "Human Resources", company: "HighbridgeGroup", image: hrImage }, // Correct path for HR
+    { name: "Mr.Suleiman David", role: "General Manager", company: "HighbridgeGroup", image: gmImage }, // Correct path for GM 
+    { name: "Miss. Lilian Ezenwanagu", role: "Human Resource Manager", company: "HighbridgeGroup", image: hrImage }, // Correct path for HR
     
 ];
 

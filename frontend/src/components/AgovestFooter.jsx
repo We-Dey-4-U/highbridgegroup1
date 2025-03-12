@@ -25,14 +25,13 @@ const AgrovestFooter= () => {
         <div className="footer-links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/services">Our Services</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about-us-group">About Us</a></li>
             <li><a href="/team">Meet Our Team</a></li>
-            <li><a href="/projects">Our Projects</a></li>
-            <li><a href="/training">Digital Training</a></li>
-            <li><a href="/inspection">Book Inspection</a></li>
-            <li><a href="/realtors">Realtor Arena</a></li>
             <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/flipvest">Flipvest</a></li>
+            <li><a href="/">Energy/Tech</a></li>
+            <li><a href="/">Luxury</a></li>
           </ul>
         </div>
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import "./AdminDashboard.css";
+import RealtorList from "./RealtorList";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -437,6 +438,14 @@ const totalInvestmentPages = Math.ceil(filteredInvestments.length / usersPerPage
     </div>
   )}
 </section>
+
+<div className="admin-section">
+  <h2>Realtors Management</h2>
+  <RealtorList />
+</div>
+
+
+
       </div>
     </div>
   );

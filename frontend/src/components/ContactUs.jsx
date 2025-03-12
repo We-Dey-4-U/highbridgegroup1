@@ -11,7 +11,7 @@ const ContactUs = () => {
       <div className="offices">
         {/* Lagos Office */}
         <div className="office">
-          <h3 style={{ color: "white" }}>Lagos State</h3>
+          <h3 style={{ color: "black" }}>Lagos State</h3>
           <p><FaMapMarkerAlt className="icon" /> KM 34 A&M PLAZA, BESIDE MOBIL FILLING STATION, LEKKI-EPE EXPRESSWAY, ORIBANWA, LAGOS.</p>
           <p><FaPhone className="icon" /> (+234)8152886217, (+234)8152886218, (+234)8152886219, (+234)8152886220, (+234)8152886221</p>
           <p><FaEnvelope className="icon" /> <a href="mailto:info@highbridgehomesltd.com">info@highbridgehomesltd.com</a></p>
@@ -19,16 +19,18 @@ const ContactUs = () => {
           <div className="map">
             <iframe
               title="Lagos Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126918.54744983907!2d3.4673634771442297!3d6.524379265318264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8c3d30f123ab%3A0x98ab6c5dbffb62f7!2sLagos!5e0!3m2!1sen!2sng!4v1691687234567!5m2!1sen!2sng"
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d253726.94388515997!2d3.4627626837207295!3d6.460261196174597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sKM%2034%20A%26M%20PLAZA%2C%20BESIDE%20MOBIL%20FILLING%20STATION%2C%20LEKKI-EPE%20EXPRESSWAY%2C%20ORIBANWA%2C%20LAGOS!5e0!3m2!1sen!2sng!4v1741779800455!5m2!1sen!2sng"
               allowFullScreen=""
               loading="lazy"
             ></iframe>
           </div>
         </div>
 
+
+
         {/* Abuja Office */}
         <div className="office">
-          <h3 style={{ color: "white" }}>F.C.T Abuja</h3>
+          <h3 style={{ color: "black" }}>F.C.T Abuja</h3>
           <p><FaMapMarkerAlt className="icon" /> SUITE 7, GROUND FLOOR, SHEMA PLAZA, INSIDE SHEMA FILLING STATION, AIRPORT ROAD, ABUJA.</p>
           <p><FaPhone className="icon" /> (+234)8152886217, (+234)8152886218, (+234)8152886219, (+234)8152886220, (+234)8152886221</p>
           <p><FaEnvelope className="icon" /> <a href="mailto:info@highbridgehomesltd.com">info@highbridgehomesltd.com</a></p>

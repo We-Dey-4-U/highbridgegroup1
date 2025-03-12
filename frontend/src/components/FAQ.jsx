@@ -51,7 +51,7 @@ const faqData = [
       - 9-Month Plan: Minimum N500,000 with 30% ROI.
       - 12-Month Plan: Minimum N500,000 with 50% ROI.
       - 18-Month Plan: Minimum N500,000 with an ROI of 75%.`  
-  },  // <-- Comma added here
+  },
   { question: "What is the maximum amount required to invest?", answer: "The maximum for the 6-month plan is N10,000,000, while there is no maximum for 9, 12, and 18-month plans." },
   { question: "What do I get after payment?", answer: "Once payment is confirmed, you will receive a Payment Receipt, Deed of Contract, and a Post-dated Cheque." },
   { question: "How will the returns be paid out?", answer: "Returns are paid at the end of the investment period via bank transfer or cheque issuance." },
@@ -62,6 +62,20 @@ const faqData = [
   { question: "What happens if the project does not meet the projected ROI?", answer: "AGROVEST, in collaboration with the Ministry of Agriculture, will work with investors to find a satisfactory resolution in case of unforeseen challenges." },
   { question: "How do I get started with the investment plan?", answer: "Contact Highbridge FLIPVEST Ltd or visit our Lagos office. Our team will assist you in selecting and completing your investment plan." },
   { question: "Is this investment plan available to individuals outside of Nigeria?", answer: "Yes, both local and international investors can participate in this agricultural investment opportunity in Lagos, Nigeria." },
+  {
+    question: "How do I register and invest in Agrovest?",
+    answer: `To register and invest in Agrovest, follow these steps:
+      1. Visit our official website and click on the "Register Now" button.
+      2. Fill in your details, including full name, email, phone number, and password.
+      3. Verify your email by clicking the confirmation link sent to your inbox.
+      4. Log in to your account using your registered email and password.
+      5. Complete your KYC verification by submitting your required documents.
+      6. Navigate to your personalized dashboard and select an investment plan.
+      7. Make your payment securely through the provided payment options.
+      8. Once confirmed, you will receive a Payment Receipt, Deed of Contract, and a Post-dated Cheque.
+      9. Monitor your investment performance from your dashboard.
+      10. At the end of the investment period, your returns will be paid directly to your bank account.`
+  }
 ];
 
 export default FAQ;
