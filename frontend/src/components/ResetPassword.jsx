@@ -23,7 +23,7 @@ const ResetPassword = () => {
 
     try {
       const response = await axios.post(
-        `https://highbridge-api-16.onrender.com/api/auth/reset-password/${token}`, // Token is in URL
+        `http://82.29.169.222:5000/api/auth/reset-password/${token}`, // Token is in URL
         { newPassword }, // Only send the new password in request body
         { headers: { "Content-Type": "application/json" } }
       );

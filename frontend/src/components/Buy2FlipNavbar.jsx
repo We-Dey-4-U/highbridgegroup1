@@ -3,7 +3,7 @@ import "./Navbar.css";
 
 const Buy2FlipNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSubsidiariesDropdownOpen, setIsSubsidiariesDropdownOpen] = useState(false);
+ 
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -17,7 +17,7 @@ const Buy2FlipNavbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <img src="/assets/images/logo/buy2fliplogo.webp" alt="Highbridge Homes Logo" />
+          <img src="/assets/images/logo/buy2fliplogo.png" alt="Highbridge Homes Logo" />
         </div>
 
         {/* Hamburger Icon for Mobile */}
