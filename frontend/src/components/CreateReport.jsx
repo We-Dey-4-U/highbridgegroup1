@@ -26,7 +26,7 @@ const CreateReport = () => {
 
     //https://highbridge-api-2.onrender.com/api/reports'
 
-    axios.post('https://highbridge-api-12.onrender.com/api/reports', report)
+    axios.post('http://82.29.169.222:5000/api/reports', report)
       .then((response) => {
         alert(response.data.message);
         setReport({

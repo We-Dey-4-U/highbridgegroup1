@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./BecomeRealtor.css";
 
-const API_BASE_URL = "http://localhost:5000/api/realtors";
+const API_BASE_URL = "http://82.29.169.222:5000/api/realtors";
 
 const BecomeRealtor = () => {
   const [formData, setFormData] = useState({

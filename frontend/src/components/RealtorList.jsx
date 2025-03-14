@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./RealtorList.css";
 
-const API_BASE_URL = "http://localhost:5000/api/admin/realtors";
+const API_BASE_URL = "http://82.29.169.222:5000/api/admin/realtors";
 
 const RealtorList = () => {
   const [realtors, setRealtors] = useState([]);
@@ -68,8 +68,13 @@ const RealtorList = () => {
 
   // Highest Referral Realtors Table Filtered and Sorted
   const highestReferralRealtors = removeDuplicates(realtors)
-    .filter(realtor => realtor["No Of Referrals"] > 0)
-    .sort((a, b) => b["No Of Referrals"] - a["No Of Referrals"]); // Sort by referral count descending
+  .filter(realtor => 
+    realtor["No Of Referrals"] > 0 &&
+    (realtor.Name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+     realtor.Username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+     realtor.Email?.toLowerCase().includes(searchQuery.toLowerCase()))
+  )
+  .sort((a, b) => b["No Of Referrals"] - a["No Of Referrals"]);
 
   const indexOfLastHighestReferral = highestReferralsPage * realtorsPerPage;
   const indexOfFirstHighestReferral = indexOfLastHighestReferral - realtorsPerPage;

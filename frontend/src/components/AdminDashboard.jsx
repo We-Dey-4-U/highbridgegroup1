@@ -41,7 +41,7 @@ const AdminDashboard = () => {
   const fetchKYCRequests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridge-api-16.onrender.com/api/admin/kyc-requests", {
+      const response = await axios.get("http://82.29.169.222:5000/api/admin/kyc-requests", {
         headers: { Authorization: `Bearer ${token}` },
       });
 

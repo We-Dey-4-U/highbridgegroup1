@@ -52,7 +52,7 @@ const HeroSection = () => {
     e.preventDefault();
     setLoading(true);
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/register", user);
+        const response = await axios.post("http://82.29.169.222:5000/api/auth/register", user);
         setSubmissionSuccess(response.data.message);
         setUser({ name: "", email: "", phone: "", password: "", referralCode: "" });
 

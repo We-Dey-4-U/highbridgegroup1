@@ -18,7 +18,7 @@ const StaffReportList = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('https://highbridge-api-13.onrender.com/api/staff-reports/staff-reports')
+    axios.get('http://82.29.169.222:5000/api/staff-reports/staff-reports')
       .then((response) => {
         setStaffReports(response.data);
 
@@ -57,7 +57,7 @@ const StaffReportList = () => {
         return;
       }
 
-      await axios.put(`https://highbridge-api-13.onrender.com/api/staff-reports/staff-reports/${reportId}`, {
+      await axios.put(`http://82.29.169.222:5000/api/staff-reports/staff-reports/${reportId}`, {
         timeOut: timeOutValues[reportId],
       });
 
@@ -110,7 +110,7 @@ const StaffReportList = () => {
       <td>
         {report.image ? (
           <img
-            src={`https://highbridge-api-13.onrender.com/${report.image}`}
+            src={`http://82.29.169.222:5000/${report.image}`}
             alt="Staff"
             style={{ width: '100px', height: '100px', borderRadius: '70%' }}
           />

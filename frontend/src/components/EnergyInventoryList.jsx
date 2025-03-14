@@ -9,7 +9,7 @@ const EnergyInventoryList = () => {
 
   useEffect(() => {
     axios
-      .get('https://highbridge-api-10.onrender.com/api/energy-inventory')
+      .get('http://82.29.169.222:5000/api/energy-inventory')
       .then((response) => {
         if (Array.isArray(response.data)) {
           const validItems = response.data.filter(item => item && item._id);
@@ -49,7 +49,7 @@ const EnergyInventoryList = () => {
     }
   
     axios
-      .put(`https://highbridge-api-10.onrender.com/api/energy-inventory/${id}`, updatedItem)
+      .put(`http://82.29.169.222:5000/api/energy-inventory/${id}`, updatedItem)
       .then((response) => {
         alert(response.data.message);
         setEditingItem(null);
@@ -66,7 +66,7 @@ const EnergyInventoryList = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://highbridge-api-10.onrender.com/api/energy-inventory/${id}`)
+      .delete(`http://82.29.169.222:5000/api/energy-inventory/${id}`)
       .then((response) => {
         alert(response.data.message);
         setInventoryItems((prev) => prev.filter((item) => item._id !== id));
