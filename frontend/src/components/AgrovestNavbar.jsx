@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 
-const AgrovestNavbar = () => {
+const AgrovestNavbar = ({ passportImage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSubsidiariesDropdownOpen, setIsSubsidiariesDropdownOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const toggleDropdown = (dropdownSetter) => {
-    dropdownSetter((prev) => !prev);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <img src="/assets/images/logo/agrovestlog.webp" alt="Highbridge Homes Logo" />
+          <img src="/assets/images/logo/agrovestlog.webp" alt="Agrovest Logo" />
         </div>
 
         {/* Hamburger Icon for Mobile */}

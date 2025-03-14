@@ -92,7 +92,7 @@ const KYCForm = ({ onKycUpdate }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "https://highbridge-api-16.onrender.com/api/auth/update-kyc",
+        "http://82.29.169.222:5000/api/auth/update-kyc",
         formData,
         {
           headers: {

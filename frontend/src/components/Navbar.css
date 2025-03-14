@@ -9,6 +9,20 @@
     border-bottom: 2px solid #007F00; /* Green border for emphasis */
   }
 
+  .passport-box {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .passport-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
   .logo img {
     height: 100px; /* Increased height for a larger logo */
     width: auto;

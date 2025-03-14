@@ -8,6 +8,7 @@ const RealtorList = () => {
   const [realtors, setRealtors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedRealtor, setSelectedRealtor] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [realtorsPerPage] = useState(10);
@@ -40,6 +41,8 @@ const RealtorList = () => {
     fetchRealtors();
   }, []);
 
+
+  
 
 
   const handleView = (realtor) => {
@@ -76,11 +79,27 @@ const RealtorList = () => {
     setHighestReferralsPage(pageNumber);
   };
 
-  // Pagination for Main Realtor Table
+  const filteredRealtors = realtors.filter((realtor) => {
+    const name = realtor.Name ? realtor.Name.toLowerCase() : "";
+    const username = realtor.Username ? realtor.Username.toLowerCase() : "";
+    const email = realtor.Email ? realtor.Email.toLowerCase() : "";
+  
+    return (
+      name.includes(searchQuery.toLowerCase()) ||
+      username.includes(searchQuery.toLowerCase()) ||
+      email.includes(searchQuery.toLowerCase())
+    );
+  });
+
   const indexOfLastRealtor = currentPage * realtorsPerPage;
   const indexOfFirstRealtor = indexOfLastRealtor - realtorsPerPage;
-  const currentRealtors = removeDuplicates(realtors).slice(indexOfFirstRealtor, indexOfLastRealtor);
-  const totalPages = Math.ceil(realtors.length / realtorsPerPage);
+  const currentRealtors = filteredRealtors.slice(
+    indexOfFirstRealtor,
+    indexOfLastRealtor
+  );
+
+  const totalPages = Math.ceil(filteredRealtors.length / realtorsPerPage);
+
 
   const paginate = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -97,12 +116,19 @@ const RealtorList = () => {
     <div className="realtor-list-page">
       
       <div className="realtor-list-container">
-        <h2>Realtors List</h2>
-        {loading ? (
-          <p>Loading realtors...</p>
-        ) : error ? (
-          <p className="error">{error}</p>
-        ) : (
+      <h2>Realtors List</h2>
+      <input
+        type="text"
+        placeholder="Search by name, username, or email..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-bar"
+      />
+      {loading ? (
+        <p>Loading realtors...</p>
+      ) : error ? (
+        <p className="error">{error}</p>
+      ) : (
           <div className="realtor-table-wrapper">
             {/* Highest Referral Realtors Table */}
             <h3>Highest Referrals</h3>

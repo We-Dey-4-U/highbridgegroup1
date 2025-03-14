@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./ResetPassword.css"; // Import the CSS file
+
 
 const ResetPassword = () => {
   const { token } = useParams(); // Extract token from URL
@@ -42,36 +44,40 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-password-container">
-      <h2>Reset Password</h2>
-      <form onSubmit={handleResetPassword}>
-        <input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-          disabled={loading}
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-          disabled={loading}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Resetting..." : "Reset Password"}
-        </button>
-        {message && <p>{message}</p>}
-      </form>
+      <div className="reset-password-box">
+        {/* Use public path for logo */}
+        <img src="/assets/images/logo/agrovestlog.webp" alt="Logo" className="logo" />
+        <h1>Reset Your Password</h1>
+        <p className="subtitle">Enter your new password below.</p>
+
+        <form onSubmit={handleResetPassword}>
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            disabled={loading}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            disabled={loading}
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? "Resetting..." : "Reset Password"}
+          </button>
+          {message && <p className="message">{message}</p>}
+        </form>
+      </div>
     </div>
   );
 };
 
 export default ResetPassword;
-
-
 
 
 

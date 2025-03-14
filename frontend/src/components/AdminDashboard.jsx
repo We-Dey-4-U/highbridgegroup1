@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridge-api-16.onrender.com/api/admin/users", {
+      const response = await axios.get("http://82.29.169.222:5000/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
   const fetchInvestments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://highbridge-api-16.onrender.com/api/admin/investments", {
+      const response = await axios.get("http://82.29.169.222:5000/api/admin/investments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInvestments(response.data || []);
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
   const handleApproveKYC = async (userId, status) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.patch(`https://highbridge-api-16.onrender.com/api/admin/kyc/${userId}`, 
+      await axios.patch(`http://82.29.169.222:5000/api/admin/kyc/${userId}`, 
         { status }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `https://highbridge-api-16.onrender.com/api/admin/approve-payment/${investmentId}`,
+        `http://82.29.169.222:5000/api/admin/approve-payment/${investmentId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
   
     try {
       const token = localStorage.getItem("token"); // Add this line to retrieve token
-      const response = await fetch(`https://highbridge-api-16.onrender.com/api/admin/investments/${investmentId}`, {
+      const response = await fetch(`http://82.29.169.222:5000/api/admin/investments/${investmentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`, // Use the retrieved token
@@ -264,7 +264,7 @@ const totalInvestmentPages = Math.ceil(filteredInvestments.length / usersPerPage
       {selectedKYC?.kycData?.passportImage && (
                 <div className="passport-box" style={{ textAlign: "center", marginBottom: "10px" }}>
                   <img
-                    src={`https://highbridge-api-16.onrender.com/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
+                    src={`http://82.29.169.222:5000/${selectedKYC.kycData.passportImage.replace(/\\/g, "/")}`}
                     alt="Passport"
                     style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: "5px", border: "1px solid #ccc" }}
                     onError={(e) => console.error("Passport image failed to load:", e.target.src)}
@@ -286,7 +286,7 @@ const totalInvestmentPages = Math.ceil(filteredInvestments.length / usersPerPage
 
         {selectedKYC?.kycData?.idDocumentImage && (
   <img
-  src={`https://highbridge-api-16.onrender.com/${selectedKYC.kycData.idDocumentImage.replace(/\\/g, "/")}`}
+  src={`http://82.29.169.222:5000/${selectedKYC.kycData.idDocumentImage.replace(/\\/g, "/")}`}
   alt="Uploaded ID Document"
   style={{ width: "100%", maxHeight: "300px", objectFit: "contain" }}
   onError={(e) => console.error("Image failed to load:", e.target.src)}
@@ -334,7 +334,7 @@ const totalInvestmentPages = Math.ceil(filteredInvestments.length / usersPerPage
       }}
     >
       <img
-        src={`https://highbridge-api-16.onrender.com/${selectedKYC.kycData.signatureImage.replace(/\\/g, "/")}`}
+        src={`http://82.29.169.222:5000/${selectedKYC.kycData.signatureImage.replace(/\\/g, "/")}`}
         alt="Signature"
         style={{
           width: "100%",
@@ -405,7 +405,7 @@ const totalInvestmentPages = Math.ceil(filteredInvestments.length / usersPerPage
               <td>
                 {investment.paymentMethod === "manual" && investment.receipt ? (
                   <a
-                    href={investment.receipt.startsWith("http") ? investment.receipt : `https://highbridge-api-16.onrender.com${investment.receipt}`}
+                    href={investment.receipt.startsWith("http") ? investment.receipt : `http://82.29.169.222:5000${investment.receipt}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

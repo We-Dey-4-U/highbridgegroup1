@@ -5,7 +5,7 @@ import AgrovestFooter from "../components/AgovestFooter"; // ✅ Import Footer
 import "./Dashboard.css"; // ✅ Import Styles
 import KYCForm from "../components/KYCForm"; // ✅ Import KYCForm component
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid  } from "recharts"; // ✅ Import Recharts
-
+import AgrovestNavbar from "../components/AgrovestNavbar";
 
 const investmentPlans = [
   { label: "25% ROI in 6 Months", value: "6months", minAmount: 500000 },
@@ -48,7 +48,7 @@ useEffect(() => {
       }
 
       console.log("🟢 Fetching dashboard data...");
-      const response = await axios.get("https://highbridge-api-16.onrender.com/api/dashboard", {
+      const response = await axios.get("http://82.29.169.222:5000/api/dashboard", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -183,7 +183,7 @@ const handlePayment = async () => {
 
           console.log("🚀 Sending Payment Data:", paymentData);
           const response = await axios.post(
-              "https://highbridge-api-16.onrender.com/api/payments/initiate-flutterwave-payment",
+              "http://82.29.169.222:5000/api/payments/initiate-flutterwave-payment",
               paymentData,
               { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -210,7 +210,7 @@ const handlePayment = async () => {
           formData.append("receipt", paymentReceipt);
 
           const manualResponse = await axios.post(
-              "https://highbridge-api-16.onrender.com/api/payments/manual-payment",
+              "http://82.29.169.222:5000/api/payments/manual-payment",
               formData,
               {
                   headers: {
@@ -254,7 +254,9 @@ const handlePayment = async () => {
   if (loading) return <p>Loading dashboard...</p>;
 
   return (
+    
     <div className="dashboard-container">
+      <AgrovestNavbar /> {/* ✅ Navbar added here */}
       <div className="dashboard-header">
         <h1>Welcome, {user?.name}</h1>
         <div className="user-info-grid">
