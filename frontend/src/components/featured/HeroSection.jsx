@@ -85,7 +85,7 @@ const HeroSection = () => {
     setSubmissionSuccess(""); // Clear previous messages
 
     try {
-        const response = await axios.post("http://82.29.169.222:5000/api/auth/login", loginData);
+        const response = await axios.post("http://localhost:5000/api/auth/login", loginData);
         const { token, user } = response.data;
 
         if (token && user) {
